@@ -29,7 +29,7 @@ windowManager:
 			pos_hint : {"x":0.17, "top":0.47} 
 		TextInput: 
 			id : mobile
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -48,7 +48,7 @@ windowManager:
 			pos_hint : {"x":0.17, "top":0.55} 
 		TextInput: 
 			id : email 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -67,7 +67,7 @@ windowManager:
 			pos_hint : {"x" : 0.17, "top" : 0.39} 
 		TextInput: 
 			id : pwd 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -303,7 +303,7 @@ windowManager:
             bold: True
             italic: True
 			size_hint : 0.2,0.2
-			pos_hint : {"x" : 0.0,"y":0.86} 
+			pos_hint : {"x" : 0.25,"y":0.86} 
 
         Button:
             #chat button
@@ -340,10 +340,21 @@ windowManager:
             # on_press: 
 			# 	root.backbtn() 
 			# 	root.manager.transition.direction = "up"
-			
 
+        Button:
+            text:''
+            size_hint:0.18,0.10
+            pos_hint: {'center_x': 0.1, 'center_y': 0.94}
+            background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/hp_button.png'
+            background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/hp_button.png'
+            on_release:
+                text: 'first tab'
+                do_default_tab: False
 
+              
+                
 
+        
 # GUI for pop up window 
 <P>: 
 	Label: 
