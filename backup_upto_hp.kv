@@ -1,0 +1,757 @@
+# there are three screens 
+windowManager: 
+	loginWindow: 
+	signupWindow: 
+	logDataWindow: 
+    homePageWindow:
+
+# GUI for the login window 
+<loginWindow>: 
+    mobile : mobile
+	email : email 
+	pwd : pwd 
+	FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'   
+        Image:
+            source:"logo.png"
+            size_hint : 0.45, 0.3
+			pos_hint : {"x":0.29, "top":0.9} 
+            allow_stretch: True
+        Label: 
+			text : "Mobile : "
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            color: [0,0,0,0.90]
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.14, "top":0.47} 
+		TextInput: 
+			id : mobile
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.45} 
+        Label: 
+			text : "Email: "
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            color: [0,0,0,0.90]
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.13, "top":0.55} 
+		TextInput: 
+			id : email 
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint :  0.5, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.53} 
+		Label: 
+			text : "Password: "
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.17, "top" : 0.39} 
+		TextInput: 
+			id : pwd 
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.36} 
+        Button: 
+			text: "Forget Password?"
+            color: [0,0,0,0.90]
+            font_size: 10
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)		
+            size_hint : 0.05, 0.05
+			pos_hint : {"x" : 0.46, "top" : 0.15} 	
+		Button:
+            text: "Register"
+            color: [0,0,0,0.90]
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)
+            size_hint : 0.05, 0.05
+            pos_hint : {"x" : 0.44, "top" : 0.2}     
+            on_release: 
+				app.root.current = 'signup'
+				root.manager.transition.direction = "left" 
+			
+		Button: 
+			text : "Login"
+            color: [0,0,0,0.90]
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)
+			size_hint : 0.05, 0.05
+			pos_hint : {"x" : 0.43, "top" : 0.25} 
+			on_release: 
+				root.validate() 
+				root.manager.transition.direction = "right"
+
+# GUI for the signup window 
+<signupWindow>: 
+	name2 : name2 
+    mobile : mobile
+	email : email 
+	pwd : pwd 
+	FloatLayout: 
+        Button:
+            #back button
+            text: 'Back'
+            font_size: 15
+            font_name: "verdana"
+            color: [1,1,1,1]
+            bold: True
+            italic: True
+            #background_color: rgba(0,0,0,0)
+            # background_normal: 'back_btn_round.png'
+            # background_down: 'back_btn_round.png'
+            mipmap: True
+            size_hint : 0.29, 0.05
+			pos_hint : {"x":0.1, "top":0.96} 
+            on_press: 
+				root.backbtn() 
+				root.manager.transition.direction = "up"
+		Label: 
+			text : "Name: "
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.18, "top":0.8} 
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+		TextInput: 
+			id : name2 
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline : False
+			size_hint : 0.29, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.78} 
+		Label: 
+			text : "Email: "
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.18, "top" : 0.7} 
+		TextInput: 
+			id : email 
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline : False
+			size_hint :0.29, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.68}
+        Label: 
+			text : "Mobile: "
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            color: [0,0,0,0.90]
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.18, "top":0.6} 
+		TextInput: 
+			id : mobile
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint :0.29, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.58}  
+		Label: 
+			text : "Password: "
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.19, "top" : 0.5} 
+		TextInput: 
+			id : pwd 
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline : False
+			size_hint : 0.29, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.48} 
+		Button: 
+			text : "Submit"
+            font_size: 15
+            font_name: "verdana"
+            color: [1,1,1,1]
+            bold: True
+            italic: True
+            #background_color: rgba(0,0,0,0)
+			size_hint :  0.29, 0.05
+			pos_hint : {"x" : 0.52, "top" : 0.35} 
+			on_release : 
+				root.signupbtn() 
+				root.manager.transition.direction = "right"
+
+# GUI to show validation result 
+<logDataWindow>: 
+	info : info 
+	FloatLayout: 
+		Label: 
+			id : info 
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.8, 0.2
+			pos_hint : {"x" : 0.15, "top" : 0.8} 
+			text : "SUCCESSFULLY LOGGED IN"
+		Button: 
+			text : "Login"
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+			size_hint : 0.4, 0.1
+			pos_hint : {"x" : 0.33, "top" : 0.55} 
+			on_release: 
+				app.root.current = 'login'
+				root.manager.transition.direction = "down"
+		Button: 
+			text : "Register"
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+			size_hint : 0.4, 0.1
+			pos_hint : {"x" : 0.33, "top" : 0.4} 
+			on_release: 
+				app.root.current = 'signup'
+				root.manager.transition.direction = "down"
+
+
+
+#GUI for homepageWindow
+<homepageWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'  
+        Button:
+            #Notification button
+            text: ''
+            background_normal: 'belliconredd.png'
+            background_down: 'belliconredd.png'
+            mipmap: True
+            size_hint : 0.02,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.notificationbtn() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #chat button
+            text: ''
+            background_normal: 'chat_btnn.png'
+            background_down: 'chat_btnn.png'
+            mipmap: True
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.94,"y":0.03} 
+            on_release: 
+				root.chatbtn() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #wishlist button
+            text: ''
+            background_normal: 'wsb.jpg'
+            background_down: 'wsb.jpg'
+            mipmap: True
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.05,"y":0.03} 
+            on_release: 
+				root.wishlistbtn() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #home button
+            text: ''
+            background_normal: 'hp_buttonn.png'
+            background_down: 'hp_buttonn.png'
+            mipmap: True
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.5,"y":0.03} 
+            on_release: 
+				root.homebtn() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #shoppinglists button
+            text: 'Shopping Lists'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.5, 0.05
+			pos_hint : {"x":0.25,"y":0.7} 
+            on_release: 
+				root.shoppinglists() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #parties and events button
+            text: 'Parties and events'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.5, 0.05
+			pos_hint : {"x":0.25,"y":0.55} 
+            on_release: 
+				root.partiesandevents() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #calender button
+            text: 'Calendar'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.5, 0.05
+			pos_hint : {"x":0.25,"y":0.4} 
+            on_release: 
+				root.calendar() 
+				root.manager.transition.direction = "up"
+
+        Button:
+            #bills button
+            text: 'Bills'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.5, 0.05
+			pos_hint : {"x":0.25,"y":0.25} 
+            on_release: 
+				root.bills() 
+				root.manager.transition.direction = "up"
+
+        TextInput:  
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline : False
+			size_hint : 0.55, 0.05
+			pos_hint : {"x" : 0.05, "top" : 0.9} 
+        
+                
+#GUI for notificationWindow
+<notificationWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'               
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.noti_settings() 
+				root.manager.transition.direction = "right"      
+        Label: 
+            text: 'Notification'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbutton() 
+				root.manager.transition.direction = "right"  
+
+        
+#GUI for settings option in notification window
+<notificationsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}  
+        Label: 
+            text: '◙ Ringtone'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Label: 
+            text: '◙ Vibrate'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.15, 0.1
+			pos_hint : {"x":0.2,"y":0.6} 
+        Label: 
+            text: '◙ Silent'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.1, 0.1
+			pos_hint : {"x":0.2,"y":0.4} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+
+#GUI for wishlist option in homepage
+<wishlistWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.wssettings() 
+				root.manager.transition.direction = "right"      
+        Label: 
+            text: 'Wishlist'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+#GUI for settings option in wishlist window
+<wishlistsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical' 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Filter'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Alphabetical Order'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.46,"y":0.7} 
+        Button: 
+            text: 'Recent to Older'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.43,"y":0.6} 
+        Button: 
+            text: 'Older to Recent'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.26, 0.1
+			pos_hint : {"x":0.4,"y":0.5} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+
+
+#GUI for chat option in homepage
+<chatWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.chatsettings() 
+				root.manager.transition.direction = "right"      
+        Label: 
+            text: 'Chat'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+
+#GUI for settings option in chat window
+<chatsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical' 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Auto download'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Image'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.35,"y":0.7} 
+        Button: 
+            text: 'Video'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.36,"y":0.6} 
+        Button: 
+            text: 'Font size'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.1,"y":0.5} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+
+
+# GUI for pop up window 
+<P>: 
+	Label: 
+		text : "Please enter valid information"
+		size_hint : 0.2, 0.1
+		pos_hint : {"x" : 0.3, "top" : 0.8} 
+
+
+<CustomDropDown>:
+    Button:
+        text: 'Profile'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('profile')
+    Button:
+        text: 'statistics'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('stats')
+    Button:
+        text: 'shared'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('shared')
+    Button:
+        text: 'Trash'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('trash')
+    Button:
+        text: 'Settings'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('settings')
+    Button:
+        text: 'Invite Friends'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('invitefriends')
+    Button:
+        text: 'contact us'
+        size_hint_x: None
+        size_hint_y: None
+        height: 44
+        on_release: root.select('contactus')

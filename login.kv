@@ -14,9 +14,9 @@ windowManager:
 		size: root.width, root.height  
         orientation:'vertical'   
         Image:
-            source:"C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/logo.png"
+            source:"logo.png"
             size_hint : 0.45, 0.3
-			pos_hint : {"x":0.25, "top":0.9} 
+			pos_hint : {"x":0.29, "top":0.9} 
             allow_stretch: True
         Label: 
 			text : "Mobile : "
@@ -26,16 +26,16 @@ windowManager:
             italic: True
             color: [0,0,0,0.90]
 			size_hint : 0.2, 0.1
-			pos_hint : {"x":0.17, "top":0.47} 
+			pos_hint : {"x":0.14, "top":0.47} 
 		TextInput: 
 			id : mobile
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
             italic: True
 			multiline :False
-			size_hint : 0.2, 0.05
+			size_hint : 0.5, 0.05
 			pos_hint : {"x" : 0.45, "top" : 0.45} 
         Label: 
 			text : "Email: "
@@ -45,16 +45,16 @@ windowManager:
             italic: True
             color: [0,0,0,0.90]
 			size_hint : 0.2, 0.1
-			pos_hint : {"x":0.17, "top":0.55} 
+			pos_hint : {"x":0.13, "top":0.55} 
 		TextInput: 
 			id : email 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
             italic: True
 			multiline :False
-			size_hint : 0.2, 0.05
+			size_hint :  0.5, 0.05
 			pos_hint : {"x" : 0.45, "top" : 0.53} 
 		Label: 
 			text : "Password: "
@@ -67,13 +67,13 @@ windowManager:
 			pos_hint : {"x" : 0.17, "top" : 0.39} 
 		TextInput: 
 			id : pwd 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
             italic: True
 			multiline :False
-			size_hint : 0.2, 0.05
+			size_hint : 0.5, 0.05
 			pos_hint : {"x" : 0.45, "top" : 0.36} 
         Button: 
 			text: "Forget Password?"
@@ -84,7 +84,7 @@ windowManager:
             italic: True
             background_color: rgba(0,0,0,0)		
             size_hint : 0.05, 0.05
-			pos_hint : {"x" : 0.46, "top" : 0.2} 	
+			pos_hint : {"x" : 0.46, "top" : 0.15} 	
 		Button:
             text: "Register"
             color: [0,0,0,0.90]
@@ -94,7 +94,7 @@ windowManager:
             italic: True
             background_color: rgba(0,0,0,0)
             size_hint : 0.05, 0.05
-            pos_hint : {"x" : 0.44, "top" : 0.25}     
+            pos_hint : {"x" : 0.44, "top" : 0.2}     
             on_release: 
 				app.root.current = 'signup'
 				root.manager.transition.direction = "left" 
@@ -108,7 +108,7 @@ windowManager:
             italic: True
             background_color: rgba(0,0,0,0)
 			size_hint : 0.05, 0.05
-			pos_hint : {"x" : 0.43, "top" : 0.3} 
+			pos_hint : {"x" : 0.43, "top" : 0.25} 
 			on_release: 
 				root.validate() 
 				root.manager.transition.direction = "right"
@@ -129,8 +129,8 @@ windowManager:
             bold: True
             italic: True
             #background_color: rgba(0,0,0,0)
-            # background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/back_btn_round.png'
-            # background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/back_btn_round.png'
+            # background_normal: 'back_btn_round.png'
+            # background_down: 'back_btn_round.png'
             mipmap: True
             size_hint : 0.29, 0.05
 			pos_hint : {"x":0.1, "top":0.96} 
@@ -148,7 +148,7 @@ windowManager:
             italic: True
 		TextInput: 
 			id : name2 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -167,7 +167,7 @@ windowManager:
 			pos_hint : {"x" : 0.18, "top" : 0.7} 
 		TextInput: 
 			id : email 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -186,7 +186,7 @@ windowManager:
 			pos_hint : {"x":0.18, "top":0.6} 
 		TextInput: 
 			id : mobile
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -205,7 +205,7 @@ windowManager:
 			pos_hint : {"x" : 0.19, "top" : 0.5} 
 		TextInput: 
 			id : pwd 
-            font_size: 15
+            font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
             bold: True
@@ -272,81 +272,107 @@ windowManager:
 
 #GUI for homepageWindow
 <homepageWindow>: 
-    title : title
     FloatLayout: 
 		size: root.width, root.height  
         orientation:'vertical'  
         Button:
-            #bell button
+            #Notification button
             text: ''
-            # font_size: 15
-            # font_name: "verdana"
-            # color: [1,1,1,1]
-            # bold: True
-            # italic: True
-            #background_color: rgba(0,0,0,0)
-            background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/bell11.png'
-            background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/bell11.png'
+            background_normal: 'belliconredd.png'
+            background_down: 'belliconredd.png'
             mipmap: True
-            size_hint : 0.1,0.07
-			pos_hint : {"x":0.90,"y":0.93} 
-            # on_press: 
-			# 	root.backbtn() 
-			# 	root.manager.transition.direction = "up"
-
-        Label: 
-			id : title
-            text: "HUT"
-            font_size: 25
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			size_hint : 0.2,0.2
-			pos_hint : {"x" : 0.0,"y":0.86} 
+            size_hint : 0.02,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.notificationbtn() 
+				root.manager.transition.direction = "up"
 
         Button:
             #chat button
             text: ''
-            background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/chat_btn.png'
-            background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/chat_btn.png'
+            background_normal: 'chat_btnn.png'
+            background_down: 'chat_btnn.png'
             mipmap: True
-            size_hint :  0.199,0.11
-			pos_hint : {"x":0.80,"y":0.00} 
-            # on_press: 
-			# 	root.backbtn() 
-			# 	root.manager.transition.direction = "up"
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.94,"y":0.03} 
+            on_release: 
+				root.chatbtn() 
+				root.manager.transition.direction = "up"
 
         Button:
             #wishlist button
             text: ''
-            background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/ws_btn.png'
-            background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/ws_btn.png'
+            background_normal: 'wsb.jpg'
+            background_down: 'wsb.jpg'
             mipmap: True
-            size_hint : 0.16,0.11
-			pos_hint : {"x":0.01,"y":0.00} 
-            # on_press: 
-			# 	root.backbtn() 
-			# 	root.manager.transition.direction = "up"
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.05,"y":0.03} 
+            on_release: 
+				root.wsbtn() 
+				root.manager.transition.direction = "up"
 
         Button:
             #home button
             text: ''
-            background_normal: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/hp_button.png'
-            background_down: 'C:/Users/HARISELVA/share/kivy-examples/tutorials/notes/mp/hp_button.png'
+            background_normal: 'hp_buttonn.png'
+            background_down: 'hp_buttonn.png'
             mipmap: True
-            size_hint :0.18,0.10
-			pos_hint : {"x":0.42,"y":0.005} 
-            # on_press: 
-			# 	root.backbtn() 
-			# 	root.manager.transition.direction = "up"
-			
+            size_hint : 0.009,0.009
+			pos_hint : {"x":0.5,"y":0.03} 
+            on_release: 
+				root.homebtn() 
+				root.manager.transition.direction = "up"
+                
 
-
-
+        
 # GUI for pop up window 
 <P>: 
 	Label: 
 		text : "Please enter valid information"
 		size_hint : 0.2, 0.1
 		pos_hint : {"x" : 0.3, "top" : 0.8} 
+
+
+<CustomDropDown>:
+    # Button:
+    #     text: 'Profile'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'statistics'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'shared'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'Trash'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'Settings'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'Invite Friends'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
+    # Button:
+    #     text: 'contact us'
+    #     size_hint_x: None
+    #     size_hint_y: None
+    #     height: 44
+    #     on_release: root.select('')
