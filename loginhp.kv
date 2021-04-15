@@ -969,6 +969,51 @@ windowManager:
                 id:grid
 		        size: root.width, root.height     
 
+#GUI for separate lists in shopping lists window
+<shoppinglistaddWindow>:
+    listname : listname
+    FloatLayout:
+        id:float
+        size: root.width, root.height  
+        orientation:'horizontal' 
+        TextInput: 
+			id : listname
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :True
+			size_hint : 0.8,0.8
+			pos_hint : {"x" : 0.1, "top" : 0.9} 
+        TextInput: 
+			id : name
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :True
+			size_hint : 0.5,0.05
+			pos_hint : {"x" : 0.2, "top" : 0.98} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.back() 
+				root.manager.transition.direction = "right"   
+        # ScrollView:
+        #     size_hint: 0.99,0.92
+        #     GridLayout: 
+        #         cols:3
+        #         id:grid
+		#         size: root.width, root.height     
+
+
 #GUI for settings option in shoppinglists window
 <shoppinglistsettingsWindow>: 
     FloatLayout: 

@@ -249,25 +249,33 @@ class chatsettingsWindow(Screen):
     
 #class for adding shopping list window
 class shoppinglistaddWindow(Screen):
-    pass
+    users=pd.read_csv('Book1.csv')
+    print(users)
+    def back(self):
+        sm.current='shoppinglists'
 
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
-    def on_pre_enter(self):
+    def butns(self):
+    #shopping list label
         label= Label(text ="Shopping Lists", font_size ='20sp',
             color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
             pos_hint ={"x":0.4,"y":0.92})
         self.ids.float.add_widget(label)
+        #back button
         backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
                         background_color =(0, 0, 0, 1),font_size="30",
 				        color =(1, 1, 1, 1),bold=True)
         backbtn.bind(on_press=self.back) 
         self.ids.float.add_widget(backbtn)
+        #settings button
         settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
                         background_normal= 'Settingsicon.png',
                         background_down= 'Settingsicon.png',mipmap= True)
         settings.bind(on_press=self.slsettings) 
         self.ids.float.add_widget(settings)
+    def on_pre_enter(self):
+        #add button
         button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
                         background_color =(0, 0, 0, 1),font_size="30",
 				        color =(1, 1, 1, 1),bold=True)
@@ -279,6 +287,11 @@ class shoppinglistsWindow(Screen):
 				        color =(1, 1, 1, 1),bold=True) 
         btn.bind(on_press=self.addn) 
         self.ids.grid.add_widget(btn) 
+    # def editnotename(self,event):
+    #     on_release: root.select('profile')
+    #def on_touch_down(self, touch):
+        #if touch.is_double_tap:
+            #print("hi")
 
     def addn(self, event):
         sm.current='shoppinglistadd'
