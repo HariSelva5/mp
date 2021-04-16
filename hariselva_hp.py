@@ -1,6 +1,9 @@
 import pandas as pd
 import random as r
 import csv
+import pickle
+import datetime
+import os
 from twilio.rest import Client
 from kivy.base import runTouchApp
 from kivy.uix.tabbedpanel import TabbedPanel
@@ -186,31 +189,49 @@ class otpmobileWindow(Screen):
 
 #class for profile from homepage menu
 class profileWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
+
+#class is for customizing dropdownmenu in the stats
+class CustomDropDown(DropDown):
+    pass
 #class for stats from homepage menu
 class statsWindow(Screen):
+    def statlist(self):
+        sm.current='statlist'
+    def statbill(self):
+        sm.current='statbill'
+    def backbtn(self):
+        sm.current='homepage'
+class statlistWindow(Screen):
     pass
-
+class statbillWindow(Screen):
+    pass
 #class for shared from homepage menu
 class sharedWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for trash from homepage menu
 class trashWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for settings from homepage menu
 class settingsWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for invitefriends from homepage menu
 class invitefriendsWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for contactus from homepage menu
 class contactusWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for settings from notification page
 class notificationsettingsWindow(Screen):
@@ -246,6 +267,56 @@ class chatWindow(Screen):
 class chatsettingsWindow(Screen):
     def backbtn(self):
         sm.current='chat'
+
+
+    
+#class for adding partiesandevents window
+class partiesandeventsaddWindow(Screen):
+    pass
+
+#class for partiesandevents from homepage
+class partiesandeventsWindow(Screen):
+    def on_pre_enter(self):
+        label= Label(text ="Parties and Events", font_size ='20sp',
+            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
+            pos_hint ={"x":0.4,"y":0.92})
+        self.ids.float.add_widget(label)
+        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        backbtn.bind(on_press=self.back) 
+        self.ids.float.add_widget(backbtn)
+        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
+                        background_normal= 'Settingsicon.png',
+                        background_down= 'Settingsicon.png',mipmap= True)
+        settings.bind(on_press=self.slsettings) 
+        self.ids.float.add_widget(settings)
+        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        button1.bind(on_press=self.createnew)
+        self.ids.grid.add_widget(button1)
+    def createnew(self,event):
+        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
+                        background_color =(0, 0, 0, 1),
+				        color =(1, 1, 1, 1),bold=True) 
+        btn.bind(on_press=self.addn) 
+        self.ids.grid.add_widget(btn) 
+
+    def addn(self, event):
+        sm.current='partiesandeventsadd'
+    def back(self,event):
+        sm.current='homepage'
+    def slsettings(self,event):
+        sm.current='partiesandeventssettings'
+
+    #here we have to make many lists first then go into the lists
+
+#class for settings option in partiesandevents window
+class partiesandeventssettingsWindow(Screen):
+    def backbtn(self):
+        sm.current='partiesandevents'
+    
     
 #class for adding shopping list window
 class shoppinglistaddWindow(Screen):
@@ -256,8 +327,14 @@ class shoppinglistaddWindow(Screen):
 
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
-    def butns(self):
-    #shopping list label
+    def on_pre_enter(self):
+        #add button
+        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        button1.bind(on_press=self.createnew)
+        self.ids.grid.add_widget(button1)
+        #shopping list label
         label= Label(text ="Shopping Lists", font_size ='20sp',
             color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
             pos_hint ={"x":0.4,"y":0.92})
@@ -274,13 +351,6 @@ class shoppinglistsWindow(Screen):
                         background_down= 'Settingsicon.png',mipmap= True)
         settings.bind(on_press=self.slsettings) 
         self.ids.float.add_widget(settings)
-    def on_pre_enter(self):
-        #add button
-        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        button1.bind(on_press=self.createnew)
-        self.ids.grid.add_widget(button1)
     def createnew(self,event):
         btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
                         background_color =(0, 0, 0, 1),
@@ -308,9 +378,7 @@ class shoppinglistsettingsWindow(Screen):
         sm.current='shoppinglists'
     
 
-#class for parties and events from homepage
-class partiesandeventsWindow(Screen):
-    pass
+
 
 #class for calendar from homepage
 class calendarWindow(Screen):
@@ -324,37 +392,58 @@ class billsWindow(Screen):
 class CustomDropDown(DropDown):
     pass
 
+
+#class for homepage settings window
+class homepagesettingsWindow(Screen):
+    def backbtn(self):
+        sm.current='homepage'
+    def account(self):
+        sm.current= 'profile'
+    def stats(self):
+        sm.current= 'stats'
+    def shared(self):
+        sm.current= 'shared'
+    def trash(self):
+        sm.current= 'trash'
+    def invitefriends(self):
+        sm.current= 'invitefriends'
+    def contactus(self):
+        sm.current= 'contactus'
+
+
 # class for Homepage
 class homepageWindow(Screen):
-    def __init__(self, **kwargs):
-        super(homepageWindow, self).__init__(**kwargs)
-        self.dropdown = CustomDropDown()
-        self.mainbutton = Button(text ='⚫ Menu  ',
-                                 size_hint_x = 0.35, size_hint_y = 0.05, pos_hint ={'x':0.00, 'y':0.95},
-                                     font_size='20',background_color=(0,0,0,0),color= [0,0,0,0.90],font_name= "verdana",bold= True)
-        self.add_widget(self.mainbutton)
-        self.mainbutton.bind(on_release = self.dropdown.open)
-        self.dropdown.bind(on_select = lambda\
-                           instance, x: setattr(self.mainbutton, 'text', x))
-        self.dropdown.bind(on_select = self.callback)
-    def callback(self, instance, x):
-        if ( format ( x )== "profile"):
-            sm.current= 'profile'
-        elif( format ( x )== "stats"):
-            sm.current= 'stats'
-        elif( format ( x )== "shared"):
-            sm.current= 'shared'
-        elif( format ( x )== "trash"):
-            sm.current= 'trash'
-        elif( format ( x )== "settings"):
-            sm.current= 'settings'
-        elif( format ( x )== "invitefriends"):
-            sm.current= 'invitefriends'
-        elif( format ( x )== "contactus"):
-            sm.current= 'contactus'
-        else:
-            '''x is self.mainbutton.text refreshed''' 
-            print ( "The chosen mode is: {0}" . format ( x ) )
+    # def __init__(self, **kwargs):
+    #     super(homepageWindow, self).__init__(**kwargs)
+    #     self.dropdown = CustomDropDown()
+    #     self.mainbutton = Button(text ='⚫ Menu  ',
+    #                              size_hint_x = 0.35, size_hint_y = 0.05, pos_hint ={'x':0.00, 'y':0.95},
+    #                                  font_size='20',background_color=[0,0,0,0.90],color= (1,1,1,1),font_name= "verdana",bold= True)
+    #     self.add_widget(self.mainbutton)
+    #     self.mainbutton.bind(on_release = self.dropdown.open)
+    #     self.dropdown.bind(on_select = lambda\
+    #                        instance, x: setattr(self.mainbutton, 'text', x))
+    #     self.dropdown.bind(on_select = self.callback)
+    # def callback(self, instance, x):
+    #     if ( format ( x )== "profile"):
+    #         sm.current= 'profile'
+    #     elif( format ( x )== "stats"):
+    #         sm.current= 'stats'
+    #     elif( format ( x )== "shared"):
+    #         sm.current= 'shared'
+    #     elif( format ( x )== "trash"):
+    #         sm.current= 'trash'
+    #     elif( format ( x )== "settings"):
+    #         sm.current= 'settings'
+    #     elif( format ( x )== "invitefriends"):
+    #         sm.current= 'invitefriends'
+    #     elif( format ( x )== "contactus"):
+    #         sm.current= 'contactus'
+    #     else:
+    #         '''x is self.mainbutton.text refreshed''' 
+    #         print ( "The chosen mode is: {0}" . format ( x ) )
+    def hp_settings(self):
+        sm.current='homepagesettings'
     def homebtn(self):
         sm.current='homepage'
     def wishlistbtn(self):
@@ -372,7 +461,58 @@ class homepageWindow(Screen):
     def bills(self):
         sm.current='bills'
 
-    
+#class for adding bills window
+class billsaddWindow(Screen):
+    pass
+
+
+
+#class for bills from homepage
+class billsWindow(Screen):
+    def on_pre_enter(self):
+        label= Label(text ="Bills", font_size ='20sp',
+            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
+            pos_hint ={"x":0.4,"y":0.92})
+        self.ids.float.add_widget(label)
+        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        backbtn.bind(on_press=self.back) 
+        self.ids.float.add_widget(backbtn)
+        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
+                        background_normal= 'Settingsicon.png',
+                        background_down= 'Settingsicon.png',mipmap= True)
+        settings.bind(on_press=self.slsettings) 
+        self.ids.float.add_widget(settings)
+        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        button1.bind(on_press=self.createnew)
+        self.ids.grid.add_widget(button1)
+    def createnew(self,event):
+        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
+                        background_color =(0, 0, 0, 1),
+				        color =(1, 1, 1, 1),bold=True) 
+        btn.bind(on_press=self.addn) 
+        self.ids.grid.add_widget(btn) 
+
+    def addn(self, event):
+        sm.current='billsadd'
+    def back(self,event):
+        sm.current='homepage'
+    def slsettings(self,event):
+        sm.current='billssettings'
+
+    #here we have to make many lists first then go into the lists
+
+#class for settings option in bills window
+class billssettingsWindow(Screen):
+    def backbtn(self):
+        sm.current='bills'
+
+
+
+
 
 # class for managing screens
 class windowManager(ScreenManager):
@@ -412,7 +552,13 @@ sm.add_widget(wishlistsettingsWindow(name='wishlistsettings'))
 sm.add_widget(chatsettingsWindow(name='chatsettings'))
 sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
-
+sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
+sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
+sm.add_widget(statlistWindow(name='statlist'))
+sm.add_widget(statbillWindow(name='statbill'))
+sm.add_widget(billssettingsWindow(name='billssettings'))
+sm.add_widget(billsaddWindow(name='billsadd'))
+sm.add_widget(homepagesettingsWindow(name='homepagesettings'))
 
 # class that builds gui
 
