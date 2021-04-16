@@ -186,31 +186,49 @@ class otpmobileWindow(Screen):
 
 #class for profile from homepage menu
 class profileWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
+
+#class is for customizing dropdownmenu in the homepage
+class CustomDropDown(DropDown):
+    pass
 #class for stats from homepage menu
 class statsWindow(Screen):
+    def statlist(self):
+        sm.current='statlist'
+    def statbill(self):
+        sm.current='statbill'
+    def backbtn(self):
+        sm.current='homepage'
+class statlistWindow(Screen):
     pass
-
+class statbillWindow(Screen):
+    pass
 #class for shared from homepage menu
 class sharedWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for trash from homepage menu
 class trashWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for settings from homepage menu
 class settingsWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for invitefriends from homepage menu
 class invitefriendsWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for contactus from homepage menu
 class contactusWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
 
 #class for settings from notification page
 class notificationsettingsWindow(Screen):
@@ -346,9 +364,54 @@ class partiesandeventssettingsWindow(Screen):
 class calendarWindow(Screen):
     pass
 
+#class for adding bills window
+class billsaddWindow(Screen):
+    pass
+
+
 #class for bills from homepage
 class billsWindow(Screen):
-    pass
+    def on_pre_enter(self):
+        label= Label(text ="Bills", font_size ='20sp',
+            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
+            pos_hint ={"x":0.4,"y":0.92})
+        self.ids.float.add_widget(label)
+        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        backbtn.bind(on_press=self.back) 
+        self.ids.float.add_widget(backbtn)
+        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
+                        background_normal= 'Settingsicon.png',
+                        background_down= 'Settingsicon.png',mipmap= True)
+        settings.bind(on_press=self.slsettings) 
+        self.ids.float.add_widget(settings)
+        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
+                        background_color =(0, 0, 0, 1),font_size="30",
+				        color =(1, 1, 1, 1),bold=True)
+        button1.bind(on_press=self.createnew)
+        self.ids.grid.add_widget(button1)
+    def createnew(self,event):
+        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
+                        background_color =(0, 0, 0, 1),
+				        color =(1, 1, 1, 1),bold=True) 
+        btn.bind(on_press=self.addn) 
+        self.ids.grid.add_widget(btn) 
+
+    def addn(self, event):
+        sm.current='billsadd'
+    def back(self,event):
+        sm.current='homepage'
+    def slsettings(self,event):
+        sm.current='billssettings'
+
+    #here we have to make many lists first then go into the lists
+
+#class for settings option in bills window
+class billssettingsWindow(Screen):
+    def backbtn(self):
+        sm.current='bills'
+
 
 #class is for customizing dropdownmenu in the homepage
 class CustomDropDown(DropDown):
@@ -425,6 +488,8 @@ sm.add_widget(forgotpasswordWindow(name='forgotpassword'))
 sm.add_widget(homepageWindow(name='homepage'))
 sm.add_widget(profileWindow(name='profile'))
 sm.add_widget(statsWindow(name='stats'))
+sm.add_widget(statlistWindow(name='statlist'))
+sm.add_widget(statbillWindow(name='statbill'))
 sm.add_widget(sharedWindow(name='shared'))
 sm.add_widget(trashWindow(name='trash'))
 sm.add_widget(settingsWindow(name='settings'))
@@ -444,6 +509,8 @@ sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
 sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
+sm.add_widget(billssettingsWindow(name='billssettings'))
+sm.add_widget(billsaddWindow(name='billsadd'))
 
 # class that builds gui
 
