@@ -516,6 +516,19 @@ windowManager:
                 size: 290,400
                 pos: 3, 40 
         Button:
+            #back button
+            text: ''
+            font_size: 20
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.settings() 
+				root.manager.transition.direction = "right" 
+   
+        Button:
             #Notification button
             text: ''
             background_normal: 'belliconredd-removebg-preview.png'
@@ -1216,49 +1229,6 @@ windowManager:
 		pos_hint : {"x" : 0.3, "top" : 0.8} 
 
 
-<CustomDropDown>:
-    Button:
-        text: 'Profile'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('profile')
-    Button:
-        text: 'Statistics'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('stats')
-    Button:
-        text: 'Shared'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('shared')
-    Button:
-        text: 'Trash'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('trash')
-    Button:
-        text: 'Settings'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('settings')
-    Button:
-        text: 'Invite Friends'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('invitefriends')
-    Button:
-        text: 'Contact us'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('contactus')
 
 
 <profileWindow>:
@@ -1365,6 +1335,37 @@ windowManager:
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
 <settingsWindow>:
+    GridLayout:
+        cols:1
+        rows:8
+        Label:
+            text:""
+        Button:
+            text:"Profile"
+            on_release:
+                root.profile()
+        Button:
+            text:"Statistics"
+            on_release:
+                root.stats()
+        Button:
+            text:"Shared"
+            on_release:
+                root.shared()
+        Button:
+            text:"Trash"
+            on_release:
+                root.trash()
+        Button:
+            text:"Invite Friends"
+            on_release:
+                root.invitefriends()
+        Button:
+            text:"Contact us"
+            on_release:
+                root.contactus()
+        Label:
+            text:""
     FloatLayout: 
 		size: root.width, root.height  
         orientation:'vertical' 
@@ -1378,6 +1379,8 @@ windowManager:
             on_release: 
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
+
+    
 <invitefriendsWindow>:
     FloatLayout: 
 		size: root.width, root.height  

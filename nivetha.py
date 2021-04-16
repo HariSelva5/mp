@@ -187,7 +187,7 @@ class otpmobileWindow(Screen):
 #class for profile from homepage menu
 class profileWindow(Screen):
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 
 
 #class is for customizing dropdownmenu in the homepage
@@ -200,7 +200,7 @@ class statsWindow(Screen):
     def statbill(self):
         sm.current='statbill'
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 class statlistWindow(Screen):
     pass
 class statbillWindow(Screen):
@@ -208,27 +208,38 @@ class statbillWindow(Screen):
 #class for shared from homepage menu
 class sharedWindow(Screen):
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 
 #class for trash from homepage menu
 class trashWindow(Screen):
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 
 #class for settings from homepage menu
 class settingsWindow(Screen):
     def backbtn(self):
         sm.current='homepage'
-
+    def profile(self):
+        sm.current= 'profile'
+    def stats(self):
+        sm.current= 'stats'
+    def shared(self):
+        sm.current= 'shared'
+    def trash(self):
+        sm.current= 'trash'
+    def invitefriends(self):
+        sm.current= 'invitefriends'
+    def contactus(self):
+        sm.current= 'contactus'
 #class for invitefriends from homepage menu
 class invitefriendsWindow(Screen):
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 
 #class for contactus from homepage menu
 class contactusWindow(Screen):
     def backbtn(self):
-        sm.current='homepage'
+        sm.current='settings'
 
 #class for settings from notification page
 class notificationsettingsWindow(Screen):
@@ -419,35 +430,7 @@ class CustomDropDown(DropDown):
 
 # class for Homepage
 class homepageWindow(Screen):
-    def __init__(self, **kwargs):
-        super(homepageWindow, self).__init__(**kwargs)
-        self.dropdown = CustomDropDown()
-        self.mainbutton = Button(text ='⚫ Menu  ',
-                                 size_hint_x = 0.35, size_hint_y = 0.05, pos_hint ={'x':0.00, 'y':0.95},
-                                     font_size='20',background_color=[0,0,0,0.90],color= (1,1,1,1),font_name= "verdana",bold= True)
-        self.add_widget(self.mainbutton)
-        self.mainbutton.bind(on_release = self.dropdown.open)
-        self.dropdown.bind(on_select = lambda\
-                           instance, x: setattr(self.mainbutton, 'text', x))
-        self.dropdown.bind(on_select = self.callback)
-    def callback(self, instance, x):
-        if ( format ( x )== "profile"):
-            sm.current= 'profile'
-        elif( format ( x )== "stats"):
-            sm.current= 'stats'
-        elif( format ( x )== "shared"):
-            sm.current= 'shared'
-        elif( format ( x )== "trash"):
-            sm.current= 'trash'
-        elif( format ( x )== "settings"):
-            sm.current= 'settings'
-        elif( format ( x )== "invitefriends"):
-            sm.current= 'invitefriends'
-        elif( format ( x )== "contactus"):
-            sm.current= 'contactus'
-        else:
-            '''x is self.mainbutton.text refreshed''' 
-            print ( "The chosen mode is: {0}" . format ( x ) )
+
     def homebtn(self):
         sm.current='homepage'
     def wishlistbtn(self):
@@ -464,7 +447,8 @@ class homepageWindow(Screen):
         sm.current='calendar'
     def bills(self):
         sm.current='bills'
-
+    def settings(self):
+        sm.current='settings'
     
 
 # class for managing screens
