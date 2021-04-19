@@ -414,11 +414,57 @@ class partiesandeventssettingsWindow(Screen):
 
 
 
-#Bills coding starts here
+#Daily expenses coding starts here
+
+#form
+class AddNewFormb(Widget):
+    text_input = ObjectProperty(None)
+
+    input = StringProperty('')
+
+    store = JsonStore("datab.json")
+
+    def submit_input(self):
+        self.input = self.text_input.text
+        print("Assign input: {}".format(self.input))
+        self.save()
+        self.input = ''
+        sm.current='dailyexpenses'
+
+    def save(self):
+        self.store.put(self.input)
+
+#recycle view for home screen
+class MyRecycleViewb(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(MyRecycleViewb, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        store = JsonStore("datab.json")
+        list_data = []
+        for item in store:
+            list_data.append({'text': item})
+
+        self.data = list_data
+
+#class for dailyexpenses
+class dailyexpensesWindow(Screen):
+    def back(self):
+        sm.current='homepage'
+
+#class for adding dailyexpenses
+class dailyexpensesaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(dailyexpensesaddWindow, self).__init__(**kwargs)
+        self.addNewFormb = AddNewFormb()
+        self.add_widget(self.addNewFormb)
+
 
 
 #Calendar coding starts here
-
 
 #class for calendar option in homepage window
 class calendarWindow(Screen):
@@ -459,23 +505,6 @@ class calendarWindow(Screen):
 class calendardateWindow(Screen):
     def back(self):
         sm.current='calendar'
-
-
-        
-    
-    
-        
-
-
-
-
-
-        
-#class for bills option in homepage window
-class billsWindow(Screen):
-    pass
-
-
 
 
 
@@ -519,10 +548,10 @@ sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
 sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
+sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
+sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
 sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
-sm.add_widget(billsWindow(name='bills'))
-
 
 
 # reading all the data stored
