@@ -1,8 +1,6 @@
 import pandas as pd
 import random as r
 import csv
-import pickle
-import datetime
 import os
 from twilio.rest import Client
 from kivy.base import runTouchApp
@@ -377,12 +375,11 @@ class shoppinglistsettingsWindow(Screen):
     def backbtn(self):
         sm.current='shoppinglists'
     
-
-
-
 #class for calendar from homepage
 class calendarWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
+
 
 #class for bills from homepage
 class billsWindow(Screen):
@@ -392,37 +389,58 @@ class billsWindow(Screen):
 class CustomDropDown(DropDown):
     pass
 
+
+#class for homepage settings window
+class homepagesettingsWindow(Screen):
+    def backbtn(self):
+        sm.current='homepage'
+    def account(self):
+        sm.current= 'profile'
+    def stats(self):
+        sm.current= 'stats'
+    def shared(self):
+        sm.current= 'shared'
+    def trash(self):
+        sm.current= 'trash'
+    def invitefriends(self):
+        sm.current= 'invitefriends'
+    def contactus(self):
+        sm.current= 'contactus'
+
+
 # class for Homepage
 class homepageWindow(Screen):
-    def __init__(self, **kwargs):
-        super(homepageWindow, self).__init__(**kwargs)
-        self.dropdown = CustomDropDown()
-        self.mainbutton = Button(text ='⚫ Menu  ',
-                                 size_hint_x = 0.35, size_hint_y = 0.05, pos_hint ={'x':0.00, 'y':0.95},
-                                     font_size='20',background_color=[0,0,0,0.90],color= (1,1,1,1),font_name= "verdana",bold= True)
-        self.add_widget(self.mainbutton)
-        self.mainbutton.bind(on_release = self.dropdown.open)
-        self.dropdown.bind(on_select = lambda\
-                           instance, x: setattr(self.mainbutton, 'text', x))
-        self.dropdown.bind(on_select = self.callback)
-    def callback(self, instance, x):
-        if ( format ( x )== "profile"):
-            sm.current= 'profile'
-        elif( format ( x )== "stats"):
-            sm.current= 'stats'
-        elif( format ( x )== "shared"):
-            sm.current= 'shared'
-        elif( format ( x )== "trash"):
-            sm.current= 'trash'
-        elif( format ( x )== "settings"):
-            sm.current= 'settings'
-        elif( format ( x )== "invitefriends"):
-            sm.current= 'invitefriends'
-        elif( format ( x )== "contactus"):
-            sm.current= 'contactus'
-        else:
-            '''x is self.mainbutton.text refreshed''' 
-            print ( "The chosen mode is: {0}" . format ( x ) )
+    # def __init__(self, **kwargs):
+    #     super(homepageWindow, self).__init__(**kwargs)
+    #     self.dropdown = CustomDropDown()
+    #     self.mainbutton = Button(text ='⚫ Menu  ',
+    #                              size_hint_x = 0.35, size_hint_y = 0.05, pos_hint ={'x':0.00, 'y':0.95},
+    #                                  font_size='20',background_color=[0,0,0,0.90],color= (1,1,1,1),font_name= "verdana",bold= True)
+    #     self.add_widget(self.mainbutton)
+    #     self.mainbutton.bind(on_release = self.dropdown.open)
+    #     self.dropdown.bind(on_select = lambda\
+    #                        instance, x: setattr(self.mainbutton, 'text', x))
+    #     self.dropdown.bind(on_select = self.callback)
+    # def callback(self, instance, x):
+    #     if ( format ( x )== "profile"):
+    #         sm.current= 'profile'
+    #     elif( format ( x )== "stats"):
+    #         sm.current= 'stats'
+    #     elif( format ( x )== "shared"):
+    #         sm.current= 'shared'
+    #     elif( format ( x )== "trash"):
+    #         sm.current= 'trash'
+    #     elif( format ( x )== "settings"):
+    #         sm.current= 'settings'
+    #     elif( format ( x )== "invitefriends"):
+    #         sm.current= 'invitefriends'
+    #     elif( format ( x )== "contactus"):
+    #         sm.current= 'contactus'
+    #     else:
+    #         '''x is self.mainbutton.text refreshed''' 
+    #         print ( "The chosen mode is: {0}" . format ( x ) )
+    def hp_settings(self):
+        sm.current='homepagesettings'
     def homebtn(self):
         sm.current='homepage'
     def wishlistbtn(self):
@@ -537,7 +555,7 @@ sm.add_widget(statlistWindow(name='statlist'))
 sm.add_widget(statbillWindow(name='statbill'))
 sm.add_widget(billssettingsWindow(name='billssettings'))
 sm.add_widget(billsaddWindow(name='billsadd'))
-
+sm.add_widget(homepagesettingsWindow(name='homepagesettings'))
 
 # class that builds gui
 

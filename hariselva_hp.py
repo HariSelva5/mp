@@ -1,9 +1,8 @@
 import pandas as pd
 import random as r
 import csv
-import pickle
-import datetime
 import os
+from KivyCalendar import CalendarWidget
 from twilio.rest import Client
 from kivy.base import runTouchApp
 from kivy.uix.tabbedpanel import TabbedPanel
@@ -25,7 +24,7 @@ from kivy.metrics import dp
 from kivy.uix.image import Image
 from kivymd.theming import ThemeManager
 from kivy.core.window import Window
-Window.clearcolor =(1,1,1, 1) 
+Window.clearcolor =(1,1,1, 1)
 #242/255, 242/255, 242/255, 1 halfwhite
 Window.size = (300,500)
 
@@ -34,6 +33,27 @@ Window.size = (300,500)
 class PopupWindow(Widget):
     def btn(self):
         popFun()
+
+#class to call calendar popup
+class popupcalendarWindow(Widget):
+    def btn(self):
+        pp()
+
+# function that displays the calendar popup content
+def pp():
+    show1 = P1()
+    window = Popup(title="Calendar", content=show1,
+                   size_hint=(None, None), size=(300, 300))
+    window.open()
+
+
+# class to build GUI for a popup calendar window
+class P1(FloatLayout):
+     def build(self):
+        return CalendarWidget()
+
+
+
 
 # class to build GUI for a popup window
 class P(FloatLayout):
@@ -55,9 +75,15 @@ class loginWindow(Screen):
     def validate(self):
         # validating if the email already exists
         users = pd.read_csv('loginhp.csv')
+        account=pd.read_csv('account.csv')
         if self.username.text not in users['Name'].unique():
             popFun()
         else:
+            account=[self.pwd.text,self.username.text]
+            csvfile = open('account.csv','w', newline='')
+            obj = csv.writer(csvfile)
+            obj.writerows(account)
+            csvfile.close()
             # switching the current screen to display validation result
             sm.current = 'homepage'
     # reset TextInput widget
@@ -96,11 +122,11 @@ class forgotpasswordWindow(Screen):
                 self.username.text=''
                 self.confirmpwd.text=''
                 self.newpwd.text=''
-                sm.current='login'        
+                sm.current='login'
         else:
-            popFun()  # if values are empty or invalid show pop up  
-       
-        
+            popFun()  # if values are empty or invalid show pop up
+
+
 
 # class to accept sign up info
 class signupWindow(Screen):
@@ -131,7 +157,7 @@ class signupWindow(Screen):
         sm.current = 'login'
 
 
-#otp genration 
+#otp genration
 otp=""
 for i in range(4):
     otp+=str(r.randint(1,9))
@@ -143,7 +169,7 @@ with open('otphp.csv', 'w', newline='') as file:
 def otpformobile():
     return ("Your OTP : {}".format(A))
 
-    
+
 # class for otp verification
 class logDataWindow(Screen):
     #onetimepwd is nothing but for going back
@@ -155,37 +181,37 @@ class logDataWindow(Screen):
             sm.current= 'forgotpassword'
         else:
             print("failure")
-    
+
 # class for getting mobile number for sending an otp
 class otpmobileWindow(Screen):
     name2 = ObjectProperty(None)
-     
-        
+
+
     def sendotpmob(self):
         k=self.name2.text
         if k not in users['Name'].unique():
-            popFun()  # if values are empty or invalid show pop up 
-        else:    
-               
+            popFun()  # if values are empty or invalid show pop up
+        else:
+
 
             #the following line needs your Twilio Account SID and Auth Token
             client = Client("AC071b2848e866d06d7d91cabd1bda3a34", "3639203184b4d6e86a96b60d09b5d5a2")
 
             # change the "from_" number to your Twilio number and the "to" number
             # to the phone number you signed up for Twilio with
-            client.messages.create(to="+91-6369683036", 
-                                            from_="+12568417046", 
+            client.messages.create(to="+91-6369683036",
+                                            from_="+12568417046",
                                             body=otpformobile())
             sm.current='logdata'
-            # self.name.text = "" 
-    
+            # self.name.text = ""
+
     def back(self):
         sm.current= 'login'
     def next(self):
         sm.current='logdata'
     def sendotp():
         sm.current='forgotpassword'
-    
+
 
 #class for profile from homepage menu
 class profileWindow(Screen):
@@ -269,7 +295,7 @@ class chatsettingsWindow(Screen):
         sm.current='chat'
 
 
-    
+
 #class for adding partiesandevents window
 class partiesandeventsaddWindow(Screen):
     pass
@@ -284,12 +310,12 @@ class partiesandeventsWindow(Screen):
         backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
                         background_color =(0, 0, 0, 1),font_size="30",
 				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back) 
+        backbtn.bind(on_press=self.back)
         self.ids.float.add_widget(backbtn)
         settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
                         background_normal= 'Settingsicon.png',
                         background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings) 
+        settings.bind(on_press=self.slsettings)
         self.ids.float.add_widget(settings)
         button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
                         background_color =(0, 0, 0, 1),font_size="30",
@@ -299,9 +325,9 @@ class partiesandeventsWindow(Screen):
     def createnew(self,event):
         btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
                         background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True) 
-        btn.bind(on_press=self.addn) 
-        self.ids.grid.add_widget(btn) 
+				        color =(1, 1, 1, 1),bold=True)
+        btn.bind(on_press=self.addn)
+        self.ids.grid.add_widget(btn)
 
     def addn(self, event):
         sm.current='partiesandeventsadd'
@@ -316,8 +342,8 @@ class partiesandeventsWindow(Screen):
 class partiesandeventssettingsWindow(Screen):
     def backbtn(self):
         sm.current='partiesandevents'
-    
-    
+
+
 #class for adding shopping list window
 class shoppinglistaddWindow(Screen):
     users=pd.read_csv('Book1.csv')
@@ -343,20 +369,20 @@ class shoppinglistsWindow(Screen):
         backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
                         background_color =(0, 0, 0, 1),font_size="30",
 				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back) 
+        backbtn.bind(on_press=self.back)
         self.ids.float.add_widget(backbtn)
         #settings button
         settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
                         background_normal= 'Settingsicon.png',
                         background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings) 
+        settings.bind(on_press=self.slsettings)
         self.ids.float.add_widget(settings)
     def createnew(self,event):
         btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
                         background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True) 
-        btn.bind(on_press=self.addn) 
-        self.ids.grid.add_widget(btn) 
+				        color =(1, 1, 1, 1),bold=True)
+        btn.bind(on_press=self.addn)
+        self.ids.grid.add_widget(btn)
     # def editnotename(self,event):
     #     on_release: root.select('profile')
     #def on_touch_down(self, touch):
@@ -376,13 +402,15 @@ class shoppinglistsWindow(Screen):
 class shoppinglistsettingsWindow(Screen):
     def backbtn(self):
         sm.current='shoppinglists'
-    
-
-
 
 #class for calendar from homepage
 class calendarWindow(Screen):
-    pass
+    def backbtn(self):
+        sm.current='homepage'
+    def build(self):
+        pp()
+        return CalendarWidget()
+
 
 #class for bills from homepage
 class billsWindow(Screen):
@@ -440,7 +468,7 @@ class homepageWindow(Screen):
     #     elif( format ( x )== "contactus"):
     #         sm.current= 'contactus'
     #     else:
-    #         '''x is self.mainbutton.text refreshed''' 
+    #         '''x is self.mainbutton.text refreshed'''
     #         print ( "The chosen mode is: {0}" . format ( x ) )
     def hp_settings(self):
         sm.current='homepagesettings'
@@ -477,12 +505,12 @@ class billsWindow(Screen):
         backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
                         background_color =(0, 0, 0, 1),font_size="30",
 				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back) 
+        backbtn.bind(on_press=self.back)
         self.ids.float.add_widget(backbtn)
         settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
                         background_normal= 'Settingsicon.png',
                         background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings) 
+        settings.bind(on_press=self.slsettings)
         self.ids.float.add_widget(settings)
         button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
                         background_color =(0, 0, 0, 1),font_size="30",
@@ -492,9 +520,9 @@ class billsWindow(Screen):
     def createnew(self,event):
         btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
                         background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True) 
-        btn.bind(on_press=self.addn) 
-        self.ids.grid.add_widget(btn) 
+				        color =(1, 1, 1, 1),bold=True)
+        btn.bind(on_press=self.addn)
+        self.ids.grid.add_widget(btn)
 
     def addn(self, event):
         sm.current='billsadd'

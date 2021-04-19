@@ -1,1 +1,2 @@
-lambda instance, x: setattr(mainbutton, 'text', x)
+
+    def __init__(self, **kwargs):

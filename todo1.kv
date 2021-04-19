@@ -1,0 +1,60 @@
+#:kivy 1.0.9
+
+
+
+       
+ 
+
+<AddNewForm>:
+    text_input: input
+    TextInput:
+        id: input
+        multiline: True
+        font_size:'10sp'
+        hint_text: "Enter list items.."
+        size: 250,300
+        pos: 23,110
+    Button:
+        text:'Submit'
+        size: 130,40
+        pos: 80,30
+        on_release: 
+            root.submit_input()
+
+
+
+<HomeScreen>:
+    FloatLayout:
+        orientation: "vertical"
+        MyRecycleView:
+        FloatLayout:
+            Button:
+                text: 'Add New'
+                size_hint :  (0.29, 0.05)
+			    pos_hint : {"x" : 0.34, "y" : 0.1} 
+                on_release: 
+                    app.root.current= 'screen_add'
+
+<MyRecycleView>:
+    viewclass: 'Label'
+    RecycleBoxLayout:
+        color: 1,1,1,1
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+<AddScreen>:
+    FloatLayout:
+        Label:
+            text: "Add to list"
+            font_size:'20sp'
+            size_hint : (0.4,0.05)
+			pos_hint : {"x":0.2,"y":0.94}
+        Button:
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
+            on_release: 
+                app.root.current= 'screen_home'
