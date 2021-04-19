@@ -1272,6 +1272,10 @@ WindowManager:
 				root.manager.transition.direction = "right" 
 
 
+#---------------------------------------------
+#shopping lists
+
+
 <AddNewForm>:
     text_input: input
     TextInput:
@@ -1288,9 +1292,6 @@ WindowManager:
         pos: 80,30
         on_release: 
             root.submit_input()
-
-
-
 
 #GUI for shoppinglists option in homepage
 <shoppinglistsWindow>:
@@ -1334,7 +1335,6 @@ WindowManager:
                 on_release: 
                     app.root.current= 'shoppinglistadd'
           
-
 <MyRecycleView>:
     viewclass: 'Label'
     color: [0,0,0,1]
@@ -1345,9 +1345,6 @@ WindowManager:
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
-
-
-
 
 #GUI for shoppinglist add window from shopping list
 <shoppinglistaddWindow>: 
@@ -1364,8 +1361,6 @@ WindowManager:
 			pos_hint : {"x":0.01,"y":0.94}
             on_release: 
                 app.root.current= 'shoppinglists'
-
-
 
 #GUI for settings option in shoppinglists window
 <shoppinglistsettingsWindow>: 
@@ -1434,19 +1429,97 @@ WindowManager:
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
 
-#GUI for partiesandevents option in homepage
+
+
+#---------------------------------------------------------------------------------
+#parties and events
+
+
+<AddNewFormP>:
+    text_input: input
+    TextInput:
+        id: input
+        multiline: True
+        font_size:'10sp'
+        hint_text: "Enter list items.."
+        size: 250,300
+        pos: 23,110
+    Button:
+        text:'Submit'
+        color: [0,0,0,1]
+        size: 130,40
+        pos: 80,30
+        on_release: 
+            root.submit_input()
+
+#GUI for shoppinglists option in homepage
 <partiesandeventsWindow>:
-    #name: 'bkrecipes'
     FloatLayout:
         id:float
         size: root.width, root.height  
         orientation:'horizontal' 
-        ScrollView:
-            size_hint: 0.99,0.92
-            GridLayout: 
-                cols:3
-                id:grid
-		        size: root.width, root.height     
+        canvas:
+            Color:
+                rgba: 0.55, 0.80, 0.50, 1 #olive green
+            RoundedRectangle:
+                size: 290,450
+                pos: 3, 40
+        MyRecycleViewP:
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.back() 
+				root.manager.transition.direction = "right" 
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.slsettings() 
+				root.manager.transition.direction = "right"   
+        FloatLayout:
+            Button:
+                text: 'Add New'
+                size_hint :  (0.29, 0.05)
+                pos_hint : {"x" : 0.34, "y" : 0.1} 
+                on_release: 
+                    app.root.current= 'partiesandeventsadd'
+
+<MyRecycleViewP>:
+    viewclass: 'Label'
+    color: [0,0,0,1]
+    RecycleBoxLayout:
+        color: [0,0,0,1]
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+#GUI for partiesandevents add window from partiesandevents
+<partiesandeventsaddWindow>: 
+    FloatLayout:
+        Label:
+            text: "Add to list"
+            color: [0,0,0,1]
+            font_size:'20sp'
+            size_hint : (0.4,0.05)
+			pos_hint : {"x":0.2,"y":0.94}
+        Button:
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
+            on_release: 
+                app.root.current= 'partiesandevents'
 
 #GUI for settings option in partiesandevents window
 <partiesandeventssettingsWindow>: 
@@ -1515,49 +1588,12 @@ WindowManager:
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
 
-#GUI for separate lists in shopping lists window
-<partiesandeventsaddWindow>:
-    listname : listname
-    FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        TextInput: 
-			id : listname
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :True
-			size_hint : 0.8,0.8
-			pos_hint : {"x" : 0.1, "top" : 0.9} 
-        TextInput: 
-			id : name
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :True
-			size_hint : 0.5,0.05
-			pos_hint : {"x" : 0.2, "top" : 0.98} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.back() 
-				root.manager.transition.direction = "right"   
-        # ScrollView:
-        #     size_hint: 0.99,0.92
-        #     GridLayout: 
-        #         cols:3
-        #         id:grid
-		#         size: root.width, root.height     
+
+
+
+
+#-------------------------------------------------------------------------
+#calendar 
 
 
 #GUI for calendar

@@ -302,6 +302,7 @@ class chatsettingsWindow(Screen):
     def backbtn(self):
         sm.current='chat'
 
+#shopping lists starts
 
 #form
 class AddNewForm(Widget):
@@ -321,9 +322,6 @@ class AddNewForm(Widget):
     def save(self):
         self.store.put(self.input)
 
-
-
-
 #recycle view for home screen
 class MyRecycleView(RecycleView):
 
@@ -339,7 +337,6 @@ class MyRecycleView(RecycleView):
             list_data.append({'text': item})
 
         self.data = list_data
-
 
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
@@ -361,52 +358,67 @@ class shoppinglistsettingsWindow(Screen):
         sm.current='shoppinglists'
 
 
+#form
+class AddNewFormP(Widget):
+    text_input = ObjectProperty(None)
+
+    input = StringProperty('')
+
+    store = JsonStore("dataP.json")
+
+    def submit_input(self):
+        self.input = self.text_input.text
+        print("Assign input: {}".format(self.input))
+        self.save()
+        self.input = ''
+        sm.current='partiesandevents'
+
+    def save(self):
+        self.store.put(self.input)
+
+#recycle view for home screen
+class MyRecycleViewP(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(MyRecycleViewP, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        store = JsonStore("dataP.json")
+        list_data = []
+        for item in store:
+            list_data.append({'text': item})
+
+        self.data = list_data
+
 #class for partiesandevents from homepage
 class partiesandeventsWindow(Screen):
-    def on_pre_enter(self):
-        label= Label(text ="Parties and Events", font_size ='20sp',
-            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
-            pos_hint ={"x":0.4,"y":0.92})
-        self.ids.float.add_widget(label)
-        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back)
-        self.ids.float.add_widget(backbtn)
-        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
-                        background_normal= 'Settingsicon.png',
-                        background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings)
-        self.ids.float.add_widget(settings)
-        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        button1.bind(on_press=self.createnew)
-        self.ids.grid.add_widget(button1)
-    def createnew(self,event):
-        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
-                        background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True)
-        btn.bind(on_press=self.addn)
-        self.ids.grid.add_widget(btn)
-
-    def addn(self, event):
-        sm.current='partiesandeventsadd'
-    def back(self,event):
+    def back(self):
         sm.current='homepage'
-    def slsettings(self,event):
+    def slsettings(self):
         sm.current='partiesandeventssettings'
 
+#class for adding partiesandevents window
+class partiesandeventsaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(partiesandeventsaddWindow, self).__init__(**kwargs)
+        self.addNewFormP = AddNewFormP()
+        self.add_widget(self.addNewFormP)
 
 #class for settings option in partiesandevents window
 class partiesandeventssettingsWindow(Screen):
     def backbtn(self):
         sm.current='partiesandevents'
 
-#class for adding partiesandevents window
-class partiesandeventsaddWindow(Screen):
-    def back(self):
-        sm.current='partiesandevents'
+
+
+
+#Bills coding starts here
+
+
+#Calendar coding starts here
+
 
 #class for calendar option in homepage window
 class calendarWindow(Screen):
