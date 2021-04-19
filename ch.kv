@@ -1,0 +1,139 @@
+# there are three screens 
+windowManager: 
+	loginWindow: 
+	signupWindow: 
+	logDataWindow: 
+    homePageWindow:
+
+# GUI for the login window 
+<loginWindow>: 
+    username : username
+	pwd : pwd 
+	FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'  
+        canvas:
+            Color:
+                rgba: 0.55, 0.80, 0.50, 1 #olive green
+            RoundedRectangle:
+                size: 290,200
+                pos: 3, 40
+            
+        Image:
+            source:"logo.png"
+            size_hint : 0.45, 0.3
+			pos_hint : {"x":0.29, "top":0.9} 
+            allow_stretch: True
+            background_color:(0.55, 0.80, 0.50, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Ellipse:
+                    size: 250,200
+			        pos: 25,270
+        Label: 
+			text : "Username: "
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            #italic: True
+            color: [0,0,0,1]
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.14, "top":0.47} 
+            outline_color:(1,1,1,1)
+            outline_width:1
+            background_color:(0.55, 0.80, 0.50, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: 95,30
+			        pos: 20,194
+            
+            
+		TextInput: 
+			id : username
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.45} 
+		Label: 
+			text : "Password: "
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.14, "top" : 0.39} 
+            outline_color:(1,1,1,1)
+            outline_width:1
+            background_color:(0.55, 0.80, 0.50, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: 95,30
+			        pos: 20,154
+		TextInput: 
+			id : pwd 
+            font_size: 10
+            font_name: "verdana"
+            password: True
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.45, "top" : 0.36} 
+        Button: 
+			text: "Forget Password?"
+            color: [0,0,0,1]
+            font_size: 10
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)	
+            outline_color:(1,1,1,1)
+            outline_width:1	
+            size_hint : 0.45, 0.05
+			pos_hint : {"x" : 0.3, "top" : 0.15} 	
+            # on_release: 
+			# 	root.forgotpassword()
+			# 	root.manager.transition.direction = "left" 
+		Button:
+            text: "Register"
+            color: [0,0,0,1]
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)
+            outline_color:(1,1,1,1)
+            outline_width:1
+            size_hint : 0.45, 0.05
+            pos_hint : {"x" : 0.3, "top" : 0.2}     
+            # on_release: 
+			# 	app.root.current = 'signup'
+			# 	root.manager.transition.direction = "left" 
+			
+		Button: 
+			text : "Login"
+            color: [0,0,0,1]
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            italic: True
+            background_color: rgba(0,0,0,0)
+            outline_color:(1,1,1,1)
+            outline_width:1
+			size_hint : 0.45, 0.05
+			pos_hint : {"x" : 0.3, "top" : 0.25} 
+			# on_release: 
+			# 	root.validate() 
+			# 	root.manager.transition.direction = "right"
+

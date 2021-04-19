@@ -1,24 +1,34 @@
-# there are three screens 
-windowManager: 
-	loginWindow: 
-	signupWindow: 
-	logDataWindow: 
-    homePageWindow:
+WindowManager:
+    MainWindow:
+    RegisterWindow:
+    ForgetpasswordWindow:
+    HomepageWindow:
+    WishlistWindow:
+    ChatWindow:
 
-# GUI for the login window 
-<loginWindow>: 
-    username : username
-	pwd : pwd 
-	FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'  
+
+# GUI for pop up window 
+<P>: 
+	Label: 
+		text : "Please enter valid information"
+		size_hint : 0.2, 0.1
+		pos_hint : {"x" : 0.3, "top" : 0.8} 
+
+
+
+<MainWindow>:
+    username: username
+	pwd: pwd 
+    FloatLayout:
+        orientation:"vertical"
+        md_bg_color: 0, 1, 0, 1
         canvas:
             Color:
                 rgba: 0.55, 0.80, 0.50, 1 #olive green
             RoundedRectangle:
                 size: 290,200
                 pos: 3, 40
-            
+
         Image:
             source:"logo.png"
             size_hint : 0.45, 0.3
@@ -31,6 +41,7 @@ windowManager:
                 Ellipse:
                     size: 250,200
 			        pos: 25,270
+
         Label: 
 			text : "Username: "
             font_size: 15
@@ -102,9 +113,9 @@ windowManager:
             outline_width:1	
             size_hint : 0.45, 0.05
 			pos_hint : {"x" : 0.3, "top" : 0.15} 	
-            on_release: 
-				root.forgotpassword()
-				root.manager.transition.direction = "left" 
+            on_release:
+                app.root.current = "otpmobile"
+                root.manager.transition.direction = "right"
 		Button:
             text: "Register"
             color: [0,0,0,1]
@@ -118,7 +129,7 @@ windowManager:
             size_hint : 0.45, 0.05
             pos_hint : {"x" : 0.3, "top" : 0.2}     
             on_release: 
-				app.root.current = 'signup'
+				app.root.current = 'register'
 				root.manager.transition.direction = "left" 
 			
 		Button: 
@@ -138,116 +149,8 @@ windowManager:
 				root.manager.transition.direction = "right"
 
 
-# GUI for the forgot password window 
-<forgotpasswordWindow>: 
-    username : username
-    # mobile : mobile
-	newpwd : newpwd 
-    confirmpwd : confirmpwd
-	FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'
-        canvas:
-            Color:
-                rgba: 0.55, 0.80, 0.50, 1 #olive green
-            RoundedRectangle:
-                size: 290,400
-                pos: 3, 40
-              
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbutton() 
-				root.manager.transition.direction = "right"   
-        Label: 
-			text : "Username : "
-            font_size: 13
-            font_name: "verdana"
-            outline_color:(1,1,1,1)
-            outline_width:1
-            bold: True
-            italic: True
-            color: [0,0,0,0.90]
-			size_hint : 0.2, 0.1
-			pos_hint : {"x":0.06, "top":0.72} 
-		TextInput: 
-			id : username
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :False
-			size_hint : 0.5, 0.05
-			pos_hint : {"x" : 0.47, "top" : 0.7} 
-		Label: 
-			text : "New Password: "
-            font_size: 13
-            outline_color:(1,1,1,1)
-            outline_width:1
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			size_hint : 0.2, 0.1
-			pos_hint : {"x" : 0.1, "top" : 0.52} 
-		TextInput: 
-			id : newpwd 
-            password: True
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :False
-			size_hint : 0.5, 0.05
-			pos_hint : {"x" : 0.47, "top" : 0.5} 
-        Label: 
-			text : "Confirm Password: "
-            font_size: 13
-            outline_color:(1,1,1,1)
-            outline_width:1
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			size_hint : 0.2, 0.1
-			pos_hint : {"x" : 0.13, "top" : 0.32} 
-		TextInput: 
-			id : confirmpwd 
-            password: True
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :False
-			size_hint : 0.5, 0.05
-			pos_hint : {"x" : 0.47, "top" : 0.3} 
-        Button: 
-			text : "Submit"
-            font_size: 15
-            font_name: "verdana"
-            color: [1,1,1,1]
-            bold: True
-            italic: True
-            #background_color: rgba(0,0,0,0)
-			size_hint :  0.29, 0.05
-			pos_hint : {"x" : 0.52, "top" : 0.15} 
-			on_release : 
-				root.verify() 
-				root.manager.transition.direction = "right"
-
-
-
-# GUI for the signup window 
-<signupWindow>: 
-	name2 : name2 
+<RegisterWindow>:
+    name2 : name2 
     mobile : mobile
 	pwd : pwd 
 	FloatLayout: 
@@ -352,6 +255,113 @@ windowManager:
 			on_release : 
 				root.signupbtn() 
 				root.manager.transition.direction = "right"
+
+
+
+<ForgetpasswordWindow>:
+    username : username
+    # mobile : mobile
+	newpwd : newpwd 
+    confirmpwd : confirmpwd
+	FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'
+        canvas:
+            Color:
+                rgba: 0.55, 0.80, 0.50, 1 #olive green
+            RoundedRectangle:
+                size: 290,400
+                pos: 3, 40
+              
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbutton() 
+				root.manager.transition.direction = "right"   
+        Label: 
+			text : "Username : "
+            font_size: 13
+            font_name: "verdana"
+            outline_color:(1,1,1,1)
+            outline_width:1
+            bold: True
+            italic: True
+            color: [0,0,0,0.90]
+			size_hint : 0.2, 0.1
+			pos_hint : {"x":0.06, "top":0.72} 
+		TextInput: 
+			id : username
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.47, "top" : 0.7} 
+		Label: 
+			text : "New Password: "
+            font_size: 13
+            outline_color:(1,1,1,1)
+            outline_width:1
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.1, "top" : 0.52} 
+		TextInput: 
+			id : newpwd 
+            password: True
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.47, "top" : 0.5} 
+        Label: 
+			text : "Confirm Password: "
+            font_size: 13
+            outline_color:(1,1,1,1)
+            outline_width:1
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			size_hint : 0.2, 0.1
+			pos_hint : {"x" : 0.13, "top" : 0.32} 
+		TextInput: 
+			id : confirmpwd 
+            password: True
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.5, 0.05
+			pos_hint : {"x" : 0.47, "top" : 0.3} 
+        Button: 
+			text : "Submit"
+            font_size: 15
+            font_name: "verdana"
+            color: [1,1,1,1]
+            bold: True
+            italic: True
+            #background_color: rgba(0,0,0,0)
+			size_hint :  0.29, 0.05
+			pos_hint : {"x" : 0.52, "top" : 0.15} 
+			on_release : 
+				root.verify() 
+				root.manager.transition.direction = "right"
+
 
 # GUI to show validation result 
 <logDataWindow>: 
@@ -501,9 +511,7 @@ windowManager:
 				root.manager.transition.direction = "down"
 
 
-
-#GUI for homepageWindow
-<homepageWindow>: 
+<HomepageWindow>:
     FloatLayout: 
 		size: root.width, root.height  
         orientation:'vertical' 
@@ -527,11 +535,11 @@ windowManager:
         Button:
             #Notification button
             text: ''
-            background_normal: 'belliconredd-removebg-preview.png'
-            background_down: 'belliconredd-removebg-preview.png'
+            background_normal: 'cuscare.png'
+            background_down: 'cuscare.png'
             mipmap: True
-            size_hint : 0.02,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
+            size_hint : 0.06,0.02
+			pos_hint : {"x":0.94,"y":0.96} 
             on_release: 
 				root.notificationbtn() 
 				root.manager.transition.direction = "up"
@@ -630,7 +638,7 @@ windowManager:
             size_hint : 0.7, 0.05
 			pos_hint : {"x":0.15,"y":0.4} 
             on_release: 
-				root.calendar() 
+				app.root.current = "calendar"
 				root.manager.transition.direction = "up"
 
         Button:
@@ -648,19 +656,8 @@ windowManager:
             size_hint : 0.7, 0.05
 			pos_hint : {"x":0.15,"y":0.25} 
             on_release: 
-				root.bills() 
+				app.root.current = "bills"
 				root.manager.transition.direction = "up"
-
-        # TextInput:  
-        #     font_size: 9
-        #     font_name: "verdana"
-        #     color: [0,0,0,0.90]
-        #     bold: True
-        #     italic: True
-		# 	multiline : False
-		# 	size_hint : 0.55, 0.05
-		# 	pos_hint : {"x" : 0.05, "top" : 0.9} 
-        
 
 
 #GUI for settings option in notification window
@@ -820,663 +817,6 @@ windowManager:
 				root.contactus() 
 				root.manager.transition.direction = "right"  
 
-
-
-#GUI for notificationWindow
-<notificationWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'               
-        Button:
-            #settings button
-            text: ''
-            background_normal: 'Settingsicon.png'
-            background_down: 'Settingsicon.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
-            on_release: 
-				root.noti_settings() 
-				root.manager.transition.direction = "right"      
-        Label: 
-            text: 'Notification'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92} 
-		Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbutton() 
-				root.manager.transition.direction = "right"  
-
-        
-#GUI for settings option in notification window
-<notificationsettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'    
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}  
-        Label: 
-            text: '◙ Ringtone'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Label: 
-            text: '◙ Vibrate'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.15, 0.1
-			pos_hint : {"x":0.2,"y":0.6} 
-        Label: 
-            text: '◙ Silent'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.1, 0.1
-			pos_hint : {"x":0.2,"y":0.4} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right"  
-
-
-#GUI for wishlist option in homepage
-<wishlistWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'    
-        Button:
-            #settings button
-            text: ''
-            background_normal: 'Settingsicon.png'
-            background_down: 'Settingsicon.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
-            on_release: 
-				root.wssettings() 
-				root.manager.transition.direction = "right"      
-        Label: 
-            text: 'Wishlist'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92} 
-		Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right"  
-
-#GUI for settings option in wishlist window
-<wishlistsettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-
-#GUI for chat option in homepage
-<chatWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical'    
-        Button:
-            #settings button
-            text: ''
-            background_normal: 'Settingsicon.png'
-            background_down: 'Settingsicon.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
-            on_release: 
-				root.chatsettings() 
-				root.manager.transition.direction = "right"      
-        Label: 
-            text: 'Chat'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92} 
-		Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right"  
-
-
-#GUI for settings option in chat window
-<chatsettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Auto download'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Image'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.35,"y":0.7} 
-        Button: 
-            text: 'Video'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.36,"y":0.6} 
-        Button: 
-            text: 'Font size'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.1,"y":0.5} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-
-#GUI for shoppinglists option in homepage
-<shoppinglistsWindow>:
-    #name: 'bkrecipes'
-    FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        ScrollView:
-            size_hint: 0.99,0.92
-            GridLayout: 
-                cols:3
-                id:grid
-		        size: root.width, root.height     
-
-#GUI for separate lists in shopping lists window
-<shoppinglistaddWindow>:
-    listname : listname
-    FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        TextInput: 
-			id : listname
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :True
-			size_hint : 0.8,0.8
-			pos_hint : {"x" : 0.1, "top" : 0.9} 
-        TextInput: 
-			id : name
-            font_size: 9
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-			multiline :True
-			size_hint : 0.5,0.05
-			pos_hint : {"x" : 0.2, "top" : 0.98} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.back() 
-				root.manager.transition.direction = "right"   
-        # ScrollView:
-        #     size_hint: 0.99,0.92
-        #     GridLayout: 
-        #         cols:3
-        #         id:grid
-		#         size: root.width, root.height     
-
-
-#GUI for settings option in shoppinglists window
-<shoppinglistsettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-
-#GUI for partiesandevents option in homepage
-<partiesandeventsWindow>:
-    #name: 'bkrecipes'
-    FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        ScrollView:
-            size_hint: 0.99,0.92
-            GridLayout: 
-                cols:3
-                id:grid
-		        size: root.width, root.height     
-
-#GUI for settings option in partiesandevents window
-<partiesandeventssettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-#GUI for bills option in homepage
-<billsWindow>:
-    #name: 'bkrecipes'
-    FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        ScrollView:
-            size_hint: 0.99,0.92
-            GridLayout: 
-                cols:3
-                id:grid
-		        size: root.width, root.height     
-
-#GUI for settings option in bills window
-<billssettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            #back button
-            text: '<'
-            font_size: 20
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-
-
-# GUI for pop up window 
-<P>: 
-	Label: 
-		text : "Please enter valid information"
-		size_hint : 0.2, 0.1
-		pos_hint : {"x" : 0.3, "top" : 0.8} 
-
-#custom dropdown in homepage
-<CustomDropDown>:
-    Button:
-        text: 'Profile'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('profile')
-    Button:
-        text: 'statistics'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('stats')
-    Button:
-        text: 'shared'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('shared')
-    Button:
-        text: 'Trash'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('trash')
-    Button:
-        text: 'Settings'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('settings')
-    Button:
-        text: 'Invite Friends'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('invitefriends')
-    Button:
-        text: 'contact us'
-        size_hint_x: None
-        size_hint_y: None
-        height: 44
-        on_release: root.select('contactus')
-
-
-
 <profileWindow>:
     FloatLayout: 
 		size: root.width, root.height  
@@ -1624,17 +964,196 @@ windowManager:
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
 
-<calendarWindow>:
+#GUI for notificationWindow
+<notificationWindow>: 
     FloatLayout: 
-        id:float
+		size: root.width, root.height  
+        orientation:'vertical'               
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.noti_settings() 
+				root.manager.transition.direction = "right"      
+        Label: 
+            text: 'Notification'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbutton() 
+				root.manager.transition.direction = "right"  
+
+        
+#GUI for settings option in notification window
+<notificationsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}  
+        Label: 
+            text: '◙ Ringtone'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Label: 
+            text: '◙ Vibrate'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.15, 0.1
+			pos_hint : {"x":0.2,"y":0.6} 
+        Label: 
+            text: '◙ Silent'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.1, 0.1
+			pos_hint : {"x":0.2,"y":0.4} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+#GUI for wishlist option in homepage
+<WishlistWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.wssettings() 
+				root.manager.transition.direction = "right"      
+        Label: 
+            text: 'Wishlist'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+#GUI for settings option in wishlist window
+<wishlistsettingsWindow>: 
+    FloatLayout: 
 		size: root.width, root.height  
         orientation:'vertical' 
-        canvas:
-            Color:
-                rgba: 0.55, 0.80, 0.50, 1 #olive green
-            RoundedRectangle:
-                size: 290,400
-                pos: 3, 40 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Filter'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Alphabetical Order'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.46,"y":0.7} 
+        Button: 
+            text: 'Recent to Older'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.43,"y":0.6} 
+        Button: 
+            text: 'Older to Recent'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.26, 0.1
+			pos_hint : {"x":0.4,"y":0.5} 
         Button:
             #back button
             text: '<'
@@ -1645,8 +1164,25 @@ windowManager:
             on_release: 
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
+   
+#GUI for chat option in homepage
+<ChatWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical'    
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.chatsettings() 
+				root.manager.transition.direction = "right"      
         Label: 
-            text: 'Calendar'
+            text: 'Chat'
             font_size: 20
             font_name: "verdana"
             color: [0,0,0,0.90]
@@ -1655,10 +1191,401 @@ windowManager:
             underline: True
             background_color:rgba(0,0,0,0)
             size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}   
+			pos_hint : {"x":0.2,"y":0.92} 
+		Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right"  
+
+
+#GUI for settings option in chat window
+<chatsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical' 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Auto download'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Image'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.35,"y":0.7} 
+        Button: 
+            text: 'Video'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.36,"y":0.6} 
+        Button: 
+            text: 'Font size'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.1,"y":0.5} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+
+#GUI for shoppinglists option in homepage
+<shoppinglistsWindow>:
+    FloatLayout:
+        id:float
+        size: root.width, root.height  
+        orientation:'horizontal' 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.back() 
+				root.manager.transition.direction = "right" 
+        Button:
+            #settings button
+            text: ''
+            background_normal: 'Settingsicon.png'
+            background_down: 'Settingsicon.png'
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.93,"y":0.96} 
+            on_release: 
+				root.slsettings() 
+				root.manager.transition.direction = "right"     
+
+
+
+#GUI for settings option in shoppinglists window
+<shoppinglistsettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical' 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Filter'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Alphabetical Order'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.46,"y":0.7} 
+        Button: 
+            text: 'Recent to Older'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.43,"y":0.6} 
+        Button: 
+            text: 'Older to Recent'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.26, 0.1
+			pos_hint : {"x":0.4,"y":0.5} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+
+#GUI for partiesandevents option in homepage
+<partiesandeventsWindow>:
+    #name: 'bkrecipes'
+    FloatLayout:
+        id:float
+        size: root.width, root.height  
+        orientation:'horizontal' 
         ScrollView:
             size_hint: 0.99,0.92
             GridLayout: 
                 cols:3
                 id:grid
 		        size: root.width, root.height     
+
+#GUI for settings option in partiesandevents window
+<partiesandeventssettingsWindow>: 
+    FloatLayout: 
+		size: root.width, root.height  
+        orientation:'vertical' 
+        Label: 
+            text: 'Settings'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}    
+        Label: 
+            text: 'Filter'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.8} 
+        Button: 
+            text: 'Alphabetical Order'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.46,"y":0.7} 
+        Button: 
+            text: 'Recent to Older'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.43,"y":0.6} 
+        Button: 
+            text: 'Older to Recent'
+            font_size: 15
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.26, 0.1
+			pos_hint : {"x":0.4,"y":0.5} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+
+#GUI for separate lists in shopping lists window
+<partiesandeventsaddWindow>:
+    listname : listname
+    FloatLayout:
+        id:float
+        size: root.width, root.height  
+        orientation:'horizontal' 
+        TextInput: 
+			id : listname
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :True
+			size_hint : 0.8,0.8
+			pos_hint : {"x" : 0.1, "top" : 0.9} 
+        TextInput: 
+			id : name
+            font_size: 9
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :True
+			size_hint : 0.5,0.05
+			pos_hint : {"x" : 0.2, "top" : 0.98} 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.back() 
+				root.manager.transition.direction = "right"   
+        # ScrollView:
+        #     size_hint: 0.99,0.92
+        #     GridLayout: 
+        #         cols:3
+        #         id:grid
+		#         size: root.width, root.height     
+
+
+#GUI for separate lists in shopping lists window
+<calendarWindow>:
+    alarm : alarm
+    FloatLayout:
+        id : float
+        Button:
+            #clock
+            text: ''
+            background_normal: 'clock.png'
+            background_down: 'clock.png'
+            mipmap: True
+            size_hint : 0.08,0.05
+			pos_hint : {"x":0.05,"y":0.93} 
+            on_release: 
+				root.show_time_picker()
+                root.manager.transition.direction = "down"
+
+        Button:
+            #calendar
+            text: ''
+            background_normal: 'calendar-month.png'
+            background_down: 'calendar-month.png'
+            mipmap: True
+            size_hint : 0.1,0.06
+			pos_hint : {"x":0.9,"y":0.92} 
+            on_release: 
+				app.root.current='calendardate'
+				root.manager.transition.direction = "down"     
+
+        Label: 
+            id : yearlabel
+			text : "what to be remainded of: "
+            font_size: 15
+            font_name: "verdana"
+            bold: True
+            #italic: True
+            color: [0,0,0,1]
+			size_hint : 0.7, 0.1
+			pos_hint : {"x":0.1, "top":0.58} 
+            outline_color:(1,1,1,1)
+            outline_width:1
+            background_color:(0.55, 0.80, 0.50, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                RoundedRectangle:
+                    size: 250,270
+			        pos: 20,30
+		TextInput: 
+			id : alarm
+            font_size: 13
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+			multiline :False
+			size_hint : 0.75, 0.3
+			pos_hint : {"x" : 0.1, "top" : 0.45} 
+        
+        Button: 
+			text : "Set Alarm"
+            font_size: 15
+            font_name: "verdana"
+            color: [1,1,1,1]
+            bold: True
+            italic: True
+            #background_color: rgba(0,0,0,0)
+			size_hint :  0.29, 0.05
+			pos_hint : {"x" : 0.34, "y" : 0.1} 
+			on_release : 
+				root.textareas() 
+				root.manager.transition.direction = "right"
+
+
+#GUI for separate lists in shopping lists window
+<calendardateWindow>:
+    
+    FloatLayout:
+        id : float
+        Image:
+            source:"cal1.jpg"
+            size_hint : 0.95, 0.98
+			pos_hint : {"x":0.01, "y":0.01} 
+            allow_stretch: True
+            background_color:(0.55, 0.80, 0.50, 1)
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.back() 
+				root.manager.transition.direction = "left"   

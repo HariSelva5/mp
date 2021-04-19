@@ -1623,3 +1623,65 @@ windowManager:
             on_release: 
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
+
+<calendarWindow>:
+    FloatLayout: 
+        id:float
+		size: root.width, root.height  
+        orientation:'vertical' 
+        canvas:
+            Color:
+                rgba: 0.55, 0.80, 0.50, 1 #olive green
+            RoundedRectangle:
+                size: 290,400
+                pos: 3, 40 
+        Button:
+            #back button
+            text: '<'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.backbtn() 
+				root.manager.transition.direction = "right" 
+        Button:
+            #back button
+            text: 'open'
+            font_size: 20
+            mipmap: True
+            size_hint : 0.03,0.02
+			pos_hint : {"x":0.05,"y":0.96} 
+            on_release: 
+				root.build() 
+				root.manager.transition.direction = "right" 
+        Label: 
+            text: 'Calendar'
+            font_size: 20
+            font_name: "verdana"
+            color: [0,0,0,0.90]
+            bold: True
+            italic: True
+            underline: True
+            background_color:rgba(0,0,0,0)
+            size_hint : 0.2, 0.1
+			pos_hint : {"x":0.2,"y":0.92}   
+        ScrollView:
+            size_hint: 0.99,0.92
+            GridLayout: 
+                cols:3
+                id:grid
+		        size: root.width, root.height     
+
+# GUI for pop up window 
+<P1>: 
+    FloatLayout:
+        id: layout
+        width: 100
+        # Widget:
+        #     id: wid
+        #     right: layout.right
+        #Label: 
+            # text : "Please enter valid information"
+            # size_hint : 0.2, 0.1
+            # pos_hint : {"x" : 0.3, "top" : 0.8} 

@@ -1,1 +1,1 @@
-lambda instance, x: setattr(mainbutton, 'text', x)
+p
