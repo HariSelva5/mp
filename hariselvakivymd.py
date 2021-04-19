@@ -18,6 +18,9 @@ from kivy.properties import ObjectProperty, StringProperty
 from kivymd.theming import ThemeManager
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
+from kivy.storage.jsonstore import JsonStore
+from kivy.uix.recycleview import RecycleView
+from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -299,12 +302,58 @@ class chatsettingsWindow(Screen):
     def backbtn(self):
         sm.current='chat'
 
+
+#form
+class AddNewForm(Widget):
+    text_input = ObjectProperty(None)
+
+    input = StringProperty('')
+
+    store = JsonStore("data.json")
+
+    def submit_input(self):
+        self.input = self.text_input.text
+        print("Assign input: {}".format(self.input))
+        self.save()
+        self.input = ''
+        sm.current='shoppinglists'
+
+    def save(self):
+        self.store.put(self.input)
+
+
+
+
+#recycle view for home screen
+class MyRecycleView(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(MyRecycleView, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        store = JsonStore("data.json")
+        list_data = []
+        for item in store:
+            list_data.append({'text': item})
+
+        self.data = list_data
+
+
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
     def back(self):
         sm.current='homepage'
     def slsettings(self):
         sm.current='shoppinglistsettings'
+
+#class for adding shopping lists
+class shoppinglistaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(shoppinglistaddWindow, self).__init__(**kwargs)
+        self.addNewForm = AddNewForm()
+        self.add_widget(self.addNewForm)
 
 #class for settings option in shoppinglists window
 class shoppinglistsettingsWindow(Screen):
@@ -453,6 +502,7 @@ sm.add_widget(wishlistsettingsWindow(name='wishlistsettings'))
 sm.add_widget(ChatWindow(name='chat'))
 sm.add_widget(chatsettingsWindow(name='chatsettings'))
 sm.add_widget(shoppinglistsWindow(name='shoppinglists'))
+sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
 sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
 sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))

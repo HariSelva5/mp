@@ -1271,12 +1271,40 @@ WindowManager:
 				root.backbtn() 
 				root.manager.transition.direction = "right" 
 
+
+<AddNewForm>:
+    text_input: input
+    TextInput:
+        id: input
+        multiline: True
+        font_size:'10sp'
+        hint_text: "Enter list items.."
+        size: 250,300
+        pos: 23,110
+    Button:
+        text:'Submit'
+        color: [0,0,0,1]
+        size: 130,40
+        pos: 80,30
+        on_release: 
+            root.submit_input()
+
+
+
+
 #GUI for shoppinglists option in homepage
 <shoppinglistsWindow>:
     FloatLayout:
         id:float
         size: root.width, root.height  
         orientation:'horizontal' 
+        canvas:
+            Color:
+                rgba: 0.55, 0.80, 0.50, 1 #olive green
+            RoundedRectangle:
+                size: 290,450
+                pos: 3, 40
+        MyRecycleView:
         Button:
             #back button
             text: '<'
@@ -1297,7 +1325,45 @@ WindowManager:
 			pos_hint : {"x":0.93,"y":0.96} 
             on_release: 
 				root.slsettings() 
-				root.manager.transition.direction = "right"     
+				root.manager.transition.direction = "right"   
+        FloatLayout:
+            Button:
+                text: 'Add New'
+                size_hint :  (0.29, 0.05)
+                pos_hint : {"x" : 0.34, "y" : 0.1} 
+                on_release: 
+                    app.root.current= 'shoppinglistadd'
+          
+
+<MyRecycleView>:
+    viewclass: 'Label'
+    color: [0,0,0,1]
+    RecycleBoxLayout:
+        color: [0,0,0,1]
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+
+
+
+#GUI for shoppinglist add window from shopping list
+<shoppinglistaddWindow>: 
+    FloatLayout:
+        Label:
+            text: "Add to list"
+            color: [0,0,0,1]
+            font_size:'20sp'
+            size_hint : (0.4,0.05)
+			pos_hint : {"x":0.2,"y":0.94}
+        Button:
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
+            on_release: 
+                app.root.current= 'shoppinglists'
 
 
 
@@ -1494,7 +1560,7 @@ WindowManager:
 		#         size: root.width, root.height     
 
 
-#GUI for separate lists in shopping lists window
+#GUI for calendar
 <calendarWindow>:
     alarm : alarm
     FloatLayout:
@@ -1549,7 +1615,7 @@ WindowManager:
             color: [0,0,0,0.90]
             bold: True
             italic: True
-			multiline :False
+			multiline :True
 			size_hint : 0.75, 0.3
 			pos_hint : {"x" : 0.1, "top" : 0.45} 
         
