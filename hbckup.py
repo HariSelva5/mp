@@ -9,6 +9,7 @@ from win10toast import ToastNotifier
 from kivymd.uix.picker import MDTimePicker
 from twilio.rest import Client
 from kivymd.app import MDApp
+from csv import DictWriter
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
@@ -462,6 +463,55 @@ class dailyexpensesaddWindow(Screen):
         self.addNewFormb = AddNewFormb()
         self.add_widget(self.addNewFormb)
 
+#class for calculator window
+class CalculatorWindow(Screen):
+    def calculate(self, calculation):
+        if calculation:
+            try:
+                self.display.text = str(eval(calculation))
+            except Exception:
+                self.display.text = "Error"
+    def back(self):
+        sm.current='dailyexpenses'
+
+
+#class for locker window
+class lockerWindow(Screen):
+    def back(self):
+        sm.current='dailyexpenses'
+    def locker(self):
+        #print(self.lock.text)
+        account=pd.read_csv("account.csv")
+        field_names = ['Name','pin']
+        n=account.iloc[0][0]
+        k=self.lock.text
+        newrow={'Name': n,'pin': k}
+        locker=pd.read_csv('lock.csv')
+        if n not in locker['Name'].unique():
+            with open('lock.csv', 'a',newline='') as f_object:
+                dictwriter_object = DictWriter(f_object, fieldnames=field_names,delimiter =',')
+                dictwriter_object.writerow(newrow)
+                f_object.close()
+        locker1=pd.read_csv('lock.csv')   #again and again writing same username pin
+        if self.lock.text!='':
+            if n in locker1['Name'].unique():
+                p=locker1.loc[locker1['Name'] == n, 'pin'] 
+                if k==p[0]:
+                    sm.current='lockerstore'
+                else:
+                    popFun()
+            else:
+                popFun()
+           
+#class for lockerstorewindow
+class lockerstoreWindow(Screen):
+        pass        
+           
+           
+       
+
+
+
 
 
 #Calendar coding starts here
@@ -483,7 +533,10 @@ class calendarWindow(Screen):
             pos_hint ={"x":0.4,"y":0.7})
         self.ids.float.add_widget(label)
 
-    
+    def backbtn(self):
+        sm.current='homepage'
+
+
     def textareas(self):
         #print(self.alarm.text)
         def timer (remider,seconds):
@@ -550,6 +603,9 @@ sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
 sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
 sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
+sm.add_widget(CalculatorWindow(name='Calculator'))
+sm.add_widget(lockerWindow(name='locker'))
+sm.add_widget(lockerstoreWindow(name='lockerstore'))
 sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
 
@@ -617,12 +673,3 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-
-
-
-
- #self.theme_cls.primary_palette = "Teal"
