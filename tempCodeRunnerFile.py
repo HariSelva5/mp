@@ -1,1 +1,2 @@
-calculate
+
+        self.data = list_data

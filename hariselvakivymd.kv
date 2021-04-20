@@ -1274,17 +1274,23 @@ WindowManager:
 
 
 <AddNewForm>:
-    text_input: input
+    item_input: input2
+    title_input: input1
     TextInput:
-        id: input
+        id: input1
+        hint_text: "Add Title"
+        font_size:'10sp'
+        size: 250,30
+        pos: 43,465
+    TextInput:
+        id: input2
         multiline: True
         font_size:'10sp'
         hint_text: "Enter list items.."
         size: 250,300
         pos: 23,110
     Button:
-        text:'Submit'
-        color: [0,0,0,1]
+        text:'Save'
         size: 130,40
         pos: 80,30
         on_release: 
@@ -1293,147 +1299,67 @@ WindowManager:
 #GUI for shoppinglists option in homepage
 <shoppinglistsWindow>:
     FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        canvas:
-            Color:
-                rgba: 0.55, 0.80, 0.50, 1 #olive green
-            RoundedRectangle:
-                size: 220,450
-                pos: 35, 40
+        orientation: "vertical"
         MyRecycleView:
-        Button:
-            #back button
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
-            on_release: 
-				root.back() 
-				root.manager.transition.direction = "right" 
-        Button:
-            #settings button
-            text: ''
-            background_normal: 'Settingsicon.png'
-            background_down: 'Settingsicon.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
-            on_release: 
-				root.slsettings() 
-				root.manager.transition.direction = "right"   
         FloatLayout:
             Button:
-                text: ''
-                background_normal: 'addnote1.png'
-                background_down: 'addnote1.png'
-                mipmap: True
-                size_hint :  (0.25,0.2)
-                pos_hint : {"x" : 0.8, "y" : 0.0} 
+                #back button
+                text:'<'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.01, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'homepage'
+                    root.manager.transition.direction = "right"
+            Button:
+                text: '+'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.9, "y" : 0.01} 
                 on_release: 
                     app.root.current= 'shoppinglistadd'
-          
+
+<SelectableLabel>:
+    # Draw a background to indicate selection
+    canvas.before:
+        Color:
+            rgba: (0.4, 0.4, 0.4, 1) if self.selected else (0.5, 0.5, 0.5, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 <MyRecycleView>:
-    viewclass: 'Label'
-    color: [0,0,0,1]
+    viewclass: 'RVItem'
     RecycleBoxLayout:
-        color: [0,0,0,1]
+        color: 1,1,1,1
         default_size: None, dp(56)
         default_size_hint: 1, None
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        spacing: dp(2)
 
 #GUI for shoppinglist add window from shopping list
 <shoppinglistaddWindow>: 
     FloatLayout:
-        Label:
-            text: "Add to list"
-            color: [0,0,0,1]
-            font_size:'20sp'
-            size_hint : (0.4,0.05)
-			pos_hint : {"x":0.2,"y":0.94}
         Button:
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
             on_release: 
-                app.root.current= 'shoppinglists'
-
-#GUI for settings option in shoppinglists window
-<shoppinglistsettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            #back button
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
+                app.root.current= 'shoppinglists'    
 
 
 #---------------------------------------------------------------------------------

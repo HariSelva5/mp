@@ -5,6 +5,7 @@ import pandas as pd
 import random as r
 import calendar
 import winsound
+import json
 from win10toast import ToastNotifier
 from kivymd.uix.picker import MDTimePicker
 from twilio.rest import Client
@@ -24,6 +25,7 @@ from kivy.uix.recycleview import RecycleView
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.lang import Builder
+from kivy.factory import Factory
 from kivy.core.window import Window
 Window.size = {300,500}
 
@@ -305,23 +307,27 @@ class chatsettingsWindow(Screen):
 
 #shopping lists starts
 
+
+class RVItem(Factory.Button):
+    def on_release(self):
+        sm.current='shoppinglistadd'
+
 #form
 class AddNewForm(Widget):
-    text_input = ObjectProperty(None)
-
-    input = StringProperty('')
+    item_input = ObjectProperty(None)
+    title_input= ObjectProperty(None)
+    input1 = StringProperty('')
+    input2 = StringProperty('')
 
     store = JsonStore("data.json")
 
     def submit_input(self):
-        self.input = self.text_input.text
-        print("Assign input: {}".format(self.input))
-        self.save()
-        self.input = ''
+        self.input1 = self.title_input.text
+        self.input2 = self.item_input.text
+        self.store.put(self.input1, items=self.input2)
+        self.title_input.text = ''
+        self.item_input.text = ''
         sm.current='shoppinglists'
-
-    def save(self):
-        self.store.put(self.input)
 
 #recycle view for home screen
 class MyRecycleView(RecycleView):
@@ -341,10 +347,8 @@ class MyRecycleView(RecycleView):
 
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
-    def back(self):
-        sm.current='homepage'
-    def slsettings(self):
-        sm.current='shoppinglistsettings'
+    pass
+
 
 #class for adding shopping lists
 class shoppinglistaddWindow(Screen):
@@ -353,11 +357,10 @@ class shoppinglistaddWindow(Screen):
         self.addNewForm = AddNewForm()
         self.add_widget(self.addNewForm)
 
-#class for settings option in shoppinglists window
-class shoppinglistsettingsWindow(Screen):
-    def backbtn(self):
-        sm.current='shoppinglists'
 
+
+
+#parties and events starts here
 
 #form
 class AddNewFormP(Widget):
@@ -407,10 +410,6 @@ class partiesandeventsaddWindow(Screen):
         self.addNewFormP = AddNewFormP()
         self.add_widget(self.addNewFormP)
 
-#class for settings option in partiesandevents window
-class partiesandeventssettingsWindow(Screen):
-    def backbtn(self):
-        sm.current='partiesandevents'
 
 
 
@@ -597,9 +596,7 @@ sm.add_widget(ChatWindow(name='chat'))
 sm.add_widget(chatsettingsWindow(name='chatsettings'))
 sm.add_widget(shoppinglistsWindow(name='shoppinglists'))
 sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
-sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
-sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
 sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
 sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
