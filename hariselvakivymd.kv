@@ -1366,168 +1366,85 @@ WindowManager:
 #parties and events
 
 
-<AddNewFormP>:
-    text_input: input
+<Addnewf>:
+    itemin: intwo
+    titlein: inone
     TextInput:
-        id: input
+        id: inone
+        hint_text: "Add Title"
+        font_size:'10sp'
+        size: 250,30
+        pos: 43,465
+    TextInput:
+        id: intwo
         multiline: True
         font_size:'10sp'
         hint_text: "Enter list items.."
         size: 250,300
         pos: 23,110
     Button:
-        text:'Submit'
-        color: [0,0,0,1]
+        text:'Save'
         size: 130,40
         pos: 80,30
         on_release: 
-            root.submit_input()
+            root.submitin()
 
 #GUI for shoppinglists option in homepage
 <partiesandeventsWindow>:
     FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        canvas:
-            Color:
-                rgba: 0.55, 0.80, 0.50, 1 #olive green
-            RoundedRectangle:
-                size: 220,450
-                pos: 35, 40
-        MyRecycleViewP:
-        Button:
-            #back button
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
-            on_release: 
-				root.back() 
-				root.manager.transition.direction = "right" 
-        Button:
-            #settings button
-            text: ''
-            background_normal: 'Settingsicon.png'
-            background_down: 'Settingsicon.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.93,"y":0.96} 
-            on_release: 
-				root.slsettings() 
-				root.manager.transition.direction = "right"   
+        orientation: "vertical"
+        Myrview:
         FloatLayout:
             Button:
-                text: ''
-                background_normal: 'addnote1.png'
-                background_down: 'addnote1.png'
-                mipmap: True
-                size_hint :  (0.25,0.2)
-                pos_hint : {"x" : 0.8, "y" : 0.0}
+                #back button
+                text:'<'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.01, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'homepage'
+                    root.manager.transition.direction = "right"
+            Button:
+                text: '+'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.9, "y" : 0.01} 
                 on_release: 
                     app.root.current= 'partiesandeventsadd'
 
-<MyRecycleViewP>:
-    viewclass: 'Label'
-    color: [0,0,0,1]
+
+<Myrview>:
+    viewclass: 'RVitem'
     RecycleBoxLayout:
-        color: [0,0,0,1]
+        color: 1,1,1,1
         default_size: None, dp(56)
         default_size_hint: 1, None
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        spacing: dp(2)
 
-#GUI for partiesandevents add window from partiesandevents
+#GUI for shoppinglist add window from shopping list
 <partiesandeventsaddWindow>: 
     FloatLayout:
-        Label:
-            text: "Add to list"
-            color: [0,0,0,1]
-            font_size:'20sp'
-            size_hint : (0.4,0.05)
-			pos_hint : {"x":0.2,"y":0.94}
         Button:
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
             on_release: 
-                app.root.current= 'partiesandevents'
-
-#GUI for settings option in partiesandevents window
-<partiesandeventssettingsWindow>: 
-    FloatLayout: 
-		size: root.width, root.height  
-        orientation:'vertical' 
-        Label: 
-            text: 'Settings'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            underline: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.92}    
-        Label: 
-            text: 'Filter'
-            font_size: 20
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.2,"y":0.8} 
-        Button: 
-            text: 'Alphabetical Order'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.46,"y":0.7} 
-        Button: 
-            text: 'Recent to Older'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.2, 0.1
-			pos_hint : {"x":0.43,"y":0.6} 
-        Button: 
-            text: 'Older to Recent'
-            font_size: 15
-            font_name: "verdana"
-            color: [0,0,0,0.90]
-            bold: True
-            italic: True
-            background_color:rgba(0,0,0,0)
-            size_hint : 0.26, 0.1
-			pos_hint : {"x":0.4,"y":0.5} 
-        Button:
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96} 
-            on_release: 
-				root.backbtn() 
-				root.manager.transition.direction = "right" 
-
-
-
+                app.root.current= 'partiesandevents'    
 
 
 
@@ -1539,68 +1456,49 @@ WindowManager:
 
 
 
-<AddNewFormb>:
-    text_input: input
+<Anf>:
+    iteminput: inputtwo
+    titleinput: inputone
     TextInput:
-        id: input
+        id: inputone
+        hint_text: "Add Title"
+        font_size:'10sp'
+        size: 250,30
+        pos: 43,465
+    TextInput:
+        id: inputtwo
         multiline: True
         font_size:'10sp'
         hint_text: "Enter list items.."
         size: 250,300
         pos: 23,110
     Button:
-        text:'Submit'
-        color: [0,0,0,1]
+        text:'Save'
         size: 130,40
         pos: 80,30
         on_release: 
-            root.submit_input()
+            root.submitinput()
 
 #GUI for shoppinglists option in homepage
 <dailyexpensesWindow>:
     FloatLayout:
-        id:float
-        size: root.width, root.height  
-        orientation:'horizontal' 
-        canvas:
-            Color:
-                rgba: 0.55, 0.80, 0.50, 1 #olive green
-            RoundedRectangle:
-                size: 220,450
-                pos: 35, 40
-        MyRecycleViewb:
-        Button:
-            #back button
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
-            on_release: 
-				root.back() 
-				root.manager.transition.direction = "right"
-        Button:
-            #calculator button
-            text:''
-            background_normal: 'cal.png'
-            background_down: 'cal.png'
-            mipmap: True
-            size_hint : 0.1,0.07
-			pos_hint : {"x":0.9,"y":0.93} 
-            on_release: 
-				app.root.current='Calculator'
-				root.manager.transition.direction = "right"
-        Button:
-            #Locker button
-            text:'Locker'
-            font_size:'20sp'
-            size_hint : 0.6,0.05
-			pos_hint : {"x":0.2,"y":0.02}
-            on_release: 
-				app.root.current='locker'
-				root.manager.transition.direction = "right"   
+        orientation: "vertical"
+        Myrecview:
         FloatLayout:
+            Button:
+                #back button
+                text:'<'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.01, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'homepage'
+                    root.manager.transition.direction = "right"
             Button:
                 text: '+'
                 font_size:"20sp"
@@ -1610,39 +1508,61 @@ WindowManager:
                     Color:
                         rgba: self.background_color
                 size_hint :  (0.1,0.05)
-                pos_hint : {"x" : 0.74, "y" : 0.1} 
+                pos_hint : {"x" : 0.9, "y" : 0.01} 
                 on_release: 
                     app.root.current= 'dailyexpensesadd'
+            Button:
+                text: 'Add Locker'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.45,0.05)
+                pos_hint : {"x" : 0.3, "y" : 0.1} 
+                on_release: 
+                    app.root.current= 'locker'
+            Button:
+            #calculator button
+                text: ''
+                background_normal: 'cal.png'
+                background_down: 'cal.png'
+                mipmap: True
+                size_hint : 0.1,0.05
+                pos_hint : {"x":0.45,"y":0.01} 
+                on_release: 
+                    app.root.current='Calculator'
+                    root.manager.transition.direction = "right"
           
-<MyRecycleViewb>:
-    viewclass: 'Label'
-    color: [0,0,0,1]
+
+<Myrecview>:
+    viewclass: 'RV'
     RecycleBoxLayout:
-        color: [0,0,0,1]
+        color: 1,1,1,1
         default_size: None, dp(56)
         default_size_hint: 1, None
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        spacing: dp(2)
 
 #GUI for shoppinglist add window from shopping list
 <dailyexpensesaddWindow>: 
     FloatLayout:
-        Label:
-            text: "Add to list"
-            color: [0,0,0,1]
-            font_size:'20sp'
-            size_hint : (0.4,0.05)
-			pos_hint : {"x":0.2,"y":0.94}
         Button:
-            text:''
-            background_normal: 'backbtn.png'
-            background_down: 'backbtn.png'
-            mipmap: True
-            size_hint : 0.03,0.02
-			pos_hint : {"x":0.05,"y":0.96}
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
             on_release: 
                 app.root.current= 'dailyexpenses'
+
+
+
+
+
 
 #GUI for calculator window
 <CalculatorWindow>:
@@ -1744,6 +1664,7 @@ WindowManager:
         TextInput: 
 			id : lock
             hint_text: "mix alphabets and symbols"
+            password: True
             font_size: 9
             font_name: "verdana"
             color: [0,0,0,0.90]
@@ -1757,10 +1678,91 @@ WindowManager:
             text:'Verify'
             mipmap: True
             size_hint : 0.3,0.05
-			pos_hint : {"x":0.4,"y":0.3}
+			pos_hint : {"x":0.34,"y":0.3}
             on_release: 
 				root.locker() 
 				root.manager.transition.direction = "right"
+
+
+
+<Afn>:
+    ini: insecond
+    intt: infirst
+    TextInput:
+        id: infirst
+        hint_text: "Add Title"
+        font_size:'10sp'
+        size: 250,30
+        pos: 43,465
+    TextInput:
+        id: insecond
+        multiline: True
+        font_size:'10sp'
+        hint_text: "Enter list items.."
+        size: 250,300
+        pos: 23,110
+    Button:
+        text:'Save'
+        size: 130,40
+        pos: 80,30
+        on_release: 
+            root.submittingginput()
+
+#GUI for shoppinglists option in homepage
+<lockerstoreWindow>:
+    FloatLayout:
+        orientation: "vertical"
+        Minerrec:
+        FloatLayout:
+            Button:
+                #back button
+                text:'<'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.01, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'dailyexpenses'
+                    root.manager.transition.direction = "right"
+            Button:
+                text: '+'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.1,0.05)
+                pos_hint : {"x" : 0.9, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'lockerstoreadd'
+            
+<Minerrec>:
+    viewclass: 'Recyvi'
+    RecycleBoxLayout:
+        color: 1,1,1,1
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        multiselect: True
+        touch_multiselect: True
+        spacing: dp(2)
+
+#GUI for shoppinglist add window from shopping list
+<lockerstoreaddWindow>: 
+    FloatLayout:
+        Button:
+            text: '<'
+            size_hint : (0.1,0.05)
+			pos_hint : {"x":0.01,"y":0.94}
+            on_release: 
+                app.root.current= 'lockerstore'
 
 
 

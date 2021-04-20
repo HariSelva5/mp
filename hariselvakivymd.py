@@ -357,110 +357,123 @@ class shoppinglistaddWindow(Screen):
         self.addNewForm = AddNewForm()
         self.add_widget(self.addNewForm)
 
-
+#shopping lists over
+#--------------------------------------------------------------------------
 
 
 #parties and events starts here
 
+
+class RVitem(Factory.Button):
+    def on_release(self):
+        sm.current='partiesandeventsadd'
+
 #form
-class AddNewFormP(Widget):
-    text_input = ObjectProperty(None)
+class Addnewf(Widget):
+    itemin = ObjectProperty(None)
+    titlein= ObjectProperty(None)
+    inone = StringProperty('')
+    intwo = StringProperty('')
 
-    input = StringProperty('')
+    partystore = JsonStore("partydata.json")
 
-    store = JsonStore("dataP.json")
-
-    def submit_input(self):
-        self.input = self.text_input.text
-        print("Assign input: {}".format(self.input))
-        self.save()
-        self.input = ''
+    def submitin(self):
+        self.inone = self.titlein.text
+        self.intwo = self.itemin.text
+        self.partystore.put(self.inone, items=self.intwo)
+        self.titlein.text = ''
+        self.itemin.text = ''
         sm.current='partiesandevents'
 
-    def save(self):
-        self.store.put(self.input)
-
 #recycle view for home screen
-class MyRecycleViewP(RecycleView):
+class Myrview(RecycleView):
 
     def __init__(self, **kwargs):
-        super(MyRecycleViewP, self).__init__(**kwargs)
-        self.load_data()
-        Clock.schedule_interval(self.load_data, 1)
+        super(Myrview, self).__init__(**kwargs)
+        self.ldata()
+        Clock.schedule_interval(self.ldata, 1)
 
-    def load_data(self, *args):
-        store = JsonStore("dataP.json")
-        list_data = []
-        for item in store:
-            list_data.append({'text': item})
+    def ldata(self, *args):
+        partystore = JsonStore("partydata.json")
+        lisdata = []
+        for item in partystore:
+            lisdata.append({'text': item})
 
-        self.data = list_data
+        self.data = lisdata
 
-#class for partiesandevents from homepage
+#class for shopping lists from homepage
 class partiesandeventsWindow(Screen):
-    def back(self):
-        sm.current='homepage'
-    def slsettings(self):
-        sm.current='partiesandeventssettings'
+    pass
 
-#class for adding partiesandevents window
+
+#class for adding shopping lists
 class partiesandeventsaddWindow(Screen):
     def __init__(self, **kwargs):
         super(partiesandeventsaddWindow, self).__init__(**kwargs)
-        self.addNewFormP = AddNewFormP()
-        self.add_widget(self.addNewFormP)
+        self.addNewF = Addnewf()
+        self.add_widget(self.addNewF)
 
-
-
-
-
+#partiesandevents over
+#---------------------------------------------------------------------------------
 #Daily expenses coding starts here
 
+
+
+
+
+class RV(Factory.Button):
+    def on_release(self):
+        sm.current='dailyexpensesadd'
+
 #form
-class AddNewFormb(Widget):
-    text_input = ObjectProperty(None)
+class Anf(Widget):
+    iteminput = ObjectProperty(None)
+    titleinput= ObjectProperty(None)
+    inputone = StringProperty('')
+    inputtwo = StringProperty('')
 
-    input = StringProperty('')
+    dailystore = JsonStore("dailydata.json")
 
-    store = JsonStore("datab.json")
 
-    def submit_input(self):
-        self.input = self.text_input.text
-        print("Assign input: {}".format(self.input))
-        self.save()
-        self.input = ''
+    def submitinput(self):
+        self.inputone = self.titleinput.text
+        self.inputtwo = self.iteminput.text
+        self.dailystore.put(self.inputone, items=self.inputtwo)
+        self.titleinput.text = ''
+        self.iteminput.text = ''
         sm.current='dailyexpenses'
 
-    def save(self):
-        self.store.put(self.input)
-
 #recycle view for home screen
-class MyRecycleViewb(RecycleView):
+class Myrecview(RecycleView):
 
     def __init__(self, **kwargs):
-        super(MyRecycleViewb, self).__init__(**kwargs)
-        self.load_data()
-        Clock.schedule_interval(self.load_data, 1)
+        super(Myrecview, self).__init__(**kwargs)
+        self.loaddata()
+        Clock.schedule_interval(self.loaddata, 1)
 
-    def load_data(self, *args):
-        store = JsonStore("datab.json")
-        list_data = []
-        for item in store:
-            list_data.append({'text': item})
+    def loaddata(self, *args):
+        dailystore = JsonStore("dailydata.json")
+        listdata = []
+        for item in dailystore:
+            listdata.append({'text': item})
 
-        self.data = list_data
+        self.data = listdata
+
 
 #class for dailyexpenses
 class dailyexpensesWindow(Screen):
-    def back(self):
-        sm.current='homepage'
+    pass
+
 
 #class for adding dailyexpenses
 class dailyexpensesaddWindow(Screen):
     def __init__(self, **kwargs):
         super(dailyexpensesaddWindow, self).__init__(**kwargs)
-        self.addNewFormb = AddNewFormb()
-        self.add_widget(self.addNewFormb)
+        self.anf = Anf()
+        self.add_widget(self.anf)
+
+
+
 
 #class for calculator window
 class CalculatorWindow(Screen):
@@ -501,17 +514,70 @@ class lockerWindow(Screen):
                     popFun()
             else:
                 popFun()
-           
-#class for lockerstorewindow
+
+
+
+
+
+
+class Recyvi(Factory.Button):
+    def on_release(self):
+        sm.current='lockerstoreadd'
+
+#form
+class Afn(Widget):
+    ini = ObjectProperty(None)
+    intt= ObjectProperty(None)
+    infirst = StringProperty('')
+    insecond = StringProperty('')
+
+    lockerstore = JsonStore("lockerstore.json")
+
+
+    def submittingginput(self):
+        self.infirst = self.intt.text
+        self.insecond = self. ini.text
+        self.lockerstore.put(self.infirst, items=self.insecond)
+        self.intt.text = ''
+        self. ini.text = ''
+        sm.current='lockerstore'
+
+#recycle view for home screen
+class Minerrec(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(Minerrec, self).__init__(**kwargs)
+        self.loda()
+        Clock.schedule_interval(self.loda, 1)
+
+    def loda(self, *args):
+        lockerstore = JsonStore("lockerstore.json")
+        lida = []
+        for item in lockerstore:
+            lida.append({'text': item})
+
+        self.data = lida
+
+
+#class for dailyexpenses
 class lockerstoreWindow(Screen):
-        pass        
-           
-           
-       
+    pass
+
+
+#class for adding dailyexpenses
+class lockerstoreaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(lockerstoreaddWindow, self).__init__(**kwargs)
+        self.afn = Afn()
+        self.add_widget(self.afn)
 
 
 
 
+
+
+
+#------------------------------------------------------------------------------------------
 
 #Calendar coding starts here
 
@@ -603,6 +669,7 @@ sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
 sm.add_widget(CalculatorWindow(name='Calculator'))
 sm.add_widget(lockerWindow(name='locker'))
 sm.add_widget(lockerstoreWindow(name='lockerstore'))
+sm.add_widget(lockerstoreaddWindow(name='lockerstoreadd'))
 sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
 
