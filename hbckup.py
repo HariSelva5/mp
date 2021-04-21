@@ -5,10 +5,12 @@ import pandas as pd
 import random as r
 import calendar
 import winsound
+import json
 from win10toast import ToastNotifier
 from kivymd.uix.picker import MDTimePicker
 from twilio.rest import Client
 from kivymd.app import MDApp
+from csv import DictWriter
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
@@ -23,6 +25,7 @@ from kivy.uix.recycleview import RecycleView
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.lang import Builder
+from kivy.factory import Factory
 from kivy.core.window import Window
 Window.size = {300,500}
 
@@ -302,27 +305,29 @@ class chatsettingsWindow(Screen):
     def backbtn(self):
         sm.current='chat'
 
+#shopping lists starts
+
+
+class RVItem(Factory.Button):
+    def on_release(self):
+        sm.current='shoppinglistadd'
 
 #form
 class AddNewForm(Widget):
-    text_input = ObjectProperty(None)
-
-    input = StringProperty('')
+    item_input = ObjectProperty(None)
+    title_input= ObjectProperty(None)
+    input1 = StringProperty('')
+    input2 = StringProperty('')
 
     store = JsonStore("data.json")
 
     def submit_input(self):
-        self.input = self.text_input.text
-        print("Assign input: {}".format(self.input))
-        self.save()
-        self.input = ''
+        self.input1 = self.title_input.text
+        self.input2 = self.item_input.text
+        self.store.put(self.input1, items=self.input2)
+        self.title_input.text = ''
+        self.item_input.text = ''
         sm.current='shoppinglists'
-
-    def save(self):
-        self.store.put(self.input)
-
-
-
 
 #recycle view for home screen
 class MyRecycleView(RecycleView):
@@ -340,13 +345,10 @@ class MyRecycleView(RecycleView):
 
         self.data = list_data
 
-
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
-    def back(self):
-        sm.current='homepage'
-    def slsettings(self):
-        sm.current='shoppinglistsettings'
+    pass
+
 
 #class for adding shopping lists
 class shoppinglistaddWindow(Screen):
@@ -355,58 +357,229 @@ class shoppinglistaddWindow(Screen):
         self.addNewForm = AddNewForm()
         self.add_widget(self.addNewForm)
 
-#class for settings option in shoppinglists window
-class shoppinglistsettingsWindow(Screen):
-    def backbtn(self):
-        sm.current='shoppinglists'
+#shopping lists over
+#--------------------------------------------------------------------------
 
 
-#class for partiesandevents from homepage
-class partiesandeventsWindow(Screen):
-    def on_pre_enter(self):
-        label= Label(text ="Parties and Events", font_size ='20sp',
-            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
-            pos_hint ={"x":0.4,"y":0.92})
-        self.ids.float.add_widget(label)
-        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back)
-        self.ids.float.add_widget(backbtn)
-        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
-                        background_normal= 'Settingsicon.png',
-                        background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings)
-        self.ids.float.add_widget(settings)
-        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        button1.bind(on_press=self.createnew)
-        self.ids.grid.add_widget(button1)
-    def createnew(self,event):
-        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
-                        background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True)
-        btn.bind(on_press=self.addn)
-        self.ids.grid.add_widget(btn)
+#parties and events starts here
 
-    def addn(self, event):
+
+class RVitem(Factory.Button):
+    def on_release(self):
         sm.current='partiesandeventsadd'
-    def back(self,event):
-        sm.current='homepage'
-    def slsettings(self,event):
-        sm.current='partiesandeventssettings'
 
+#form
+class Addnewf(Widget):
+    itemin = ObjectProperty(None)
+    titlein= ObjectProperty(None)
+    inone = StringProperty('')
+    intwo = StringProperty('')
 
-#class for settings option in partiesandevents window
-class partiesandeventssettingsWindow(Screen):
-    def backbtn(self):
+    partystore = JsonStore("partydata.json")
+
+    def submitin(self):
+        self.inone = self.titlein.text
+        self.intwo = self.itemin.text
+        self.partystore.put(self.inone, items=self.intwo)
+        self.titlein.text = ''
+        self.itemin.text = ''
         sm.current='partiesandevents'
 
-#class for adding partiesandevents window
+#recycle view for home screen
+class Myrview(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(Myrview, self).__init__(**kwargs)
+        self.ldata()
+        Clock.schedule_interval(self.ldata, 1)
+
+    def ldata(self, *args):
+        partystore = JsonStore("partydata.json")
+        lisdata = []
+        for item in partystore:
+            lisdata.append({'text': item})
+
+        self.data = lisdata
+
+#class for shopping lists from homepage
+class partiesandeventsWindow(Screen):
+    pass
+
+
+#class for adding shopping lists
 class partiesandeventsaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(partiesandeventsaddWindow, self).__init__(**kwargs)
+        self.addNewF = Addnewf()
+        self.add_widget(self.addNewF)
+
+#partiesandevents over
+#---------------------------------------------------------------------------------
+#Daily expenses coding starts here
+
+
+
+
+
+class RV(Factory.Button):
+    def on_release(self):
+        sm.current='dailyexpensesadd'
+
+#form
+class Anf(Widget):
+    iteminput = ObjectProperty(None)
+    titleinput= ObjectProperty(None)
+    inputone = StringProperty('')
+    inputtwo = StringProperty('')
+
+    dailystore = JsonStore("dailydata.json")
+
+
+    def submitinput(self):
+        self.inputone = self.titleinput.text
+        self.inputtwo = self.iteminput.text
+        self.dailystore.put(self.inputone, items=self.inputtwo)
+        self.titleinput.text = ''
+        self.iteminput.text = ''
+        sm.current='dailyexpenses'
+
+#recycle view for home screen
+class Myrecview(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(Myrecview, self).__init__(**kwargs)
+        self.loaddata()
+        Clock.schedule_interval(self.loaddata, 1)
+
+    def loaddata(self, *args):
+        dailystore = JsonStore("dailydata.json")
+        listdata = []
+        for item in dailystore:
+            listdata.append({'text': item})
+
+        self.data = listdata
+
+
+#class for dailyexpenses
+class dailyexpensesWindow(Screen):
+    pass
+
+
+#class for adding dailyexpenses
+class dailyexpensesaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(dailyexpensesaddWindow, self).__init__(**kwargs)
+        self.anf = Anf()
+        self.add_widget(self.anf)
+
+
+
+
+#class for calculator window
+class CalculatorWindow(Screen):
+    def calculate(self, calculation):
+        if calculation:
+            try:
+                self.display.text = str(eval(calculation))
+            except Exception:
+                self.display.text = "Error"
     def back(self):
-        sm.current='partiesandevents'
+        sm.current='dailyexpenses'
+
+
+#class for locker window
+class lockerWindow(Screen):
+    def back(self):
+        sm.current='dailyexpenses'
+    def locker(self):
+        #print(self.lock.text)
+        account=pd.read_csv("account.csv")
+        field_names = ['Name','pin']
+        n=account.iloc[0][0]
+        k=self.lock.text
+        newrow={'Name': n,'pin': k}
+        locker=pd.read_csv('lock.csv')
+        if n not in locker['Name'].unique():
+            with open('lock.csv', 'a',newline='') as f_object:
+                dictwriter_object = DictWriter(f_object, fieldnames=field_names,delimiter =',')
+                dictwriter_object.writerow(newrow)
+                f_object.close()
+        locker1=pd.read_csv('lock.csv')   #again and again writing same username pin
+        if self.lock.text!='':
+            if n in locker1['Name'].unique():
+                p=locker1.loc[locker1['Name'] == n, 'pin'] 
+                if k==p[0]:
+                    sm.current='lockerstore'
+                else:
+                    popFun()
+            else:
+                popFun()
+
+
+
+
+
+
+class Recyvi(Factory.Button):
+    def on_release(self):
+        sm.current='lockerstoreadd'
+
+#form
+class Afn(Widget):
+    ini = ObjectProperty(None)
+    intt= ObjectProperty(None)
+    infirst = StringProperty('')
+    insecond = StringProperty('')
+
+    lockerstore = JsonStore("lockerstore.json")
+
+
+    def submittingginput(self):
+        self.infirst = self.intt.text
+        self.insecond = self. ini.text
+        self.lockerstore.put(self.infirst, items=self.insecond)
+        self.intt.text = ''
+        self. ini.text = ''
+        sm.current='lockerstore'
+
+#recycle view for home screen
+class Minerrec(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(Minerrec, self).__init__(**kwargs)
+        self.loda()
+        Clock.schedule_interval(self.loda, 1)
+
+    def loda(self, *args):
+        lockerstore = JsonStore("lockerstore.json")
+        lida = []
+        for item in lockerstore:
+            lida.append({'text': item})
+
+        self.data = lida
+
+
+#class for dailyexpenses
+class lockerstoreWindow(Screen):
+    pass
+
+
+#class for adding dailyexpenses
+class lockerstoreaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(lockerstoreaddWindow, self).__init__(**kwargs)
+        self.afn = Afn()
+        self.add_widget(self.afn)
+
+
+
+
+
+
+
+#------------------------------------------------------------------------------------------
+
+#Calendar coding starts here
 
 #class for calendar option in homepage window
 class calendarWindow(Screen):
@@ -425,7 +598,10 @@ class calendarWindow(Screen):
             pos_hint ={"x":0.4,"y":0.7})
         self.ids.float.add_widget(label)
 
-    
+    def backbtn(self):
+        sm.current='homepage'
+
+
     def textareas(self):
         #print(self.alarm.text)
         def timer (remider,seconds):
@@ -447,23 +623,6 @@ class calendarWindow(Screen):
 class calendardateWindow(Screen):
     def back(self):
         sm.current='calendar'
-
-
-        
-    
-    
-        
-
-
-
-
-
-        
-#class for bills option in homepage window
-class billsWindow(Screen):
-    pass
-
-
 
 
 
@@ -503,14 +662,16 @@ sm.add_widget(ChatWindow(name='chat'))
 sm.add_widget(chatsettingsWindow(name='chatsettings'))
 sm.add_widget(shoppinglistsWindow(name='shoppinglists'))
 sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
-sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
-sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
+sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
+sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
+sm.add_widget(CalculatorWindow(name='Calculator'))
+sm.add_widget(lockerWindow(name='locker'))
+sm.add_widget(lockerstoreWindow(name='lockerstore'))
+sm.add_widget(lockerstoreaddWindow(name='lockerstoreadd'))
 sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
-sm.add_widget(billsWindow(name='bills'))
-
 
 
 # reading all the data stored
@@ -576,12 +737,3 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-
-
-
-
- #self.theme_cls.primary_palette = "Teal"

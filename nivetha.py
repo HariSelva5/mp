@@ -51,7 +51,7 @@ class MainWindow(Screen):
 
     def validate(self):
         # validating if the email already exists
-        users = pd.read_csv('nivelogin.csv')
+        users = pd.read_csv('loginhp.csv')
         account=pd.read_csv('account.csv')
         if self.username.text=='' and self.pwd.text=='':
             if self.username.text not in users['Name'].unique():
@@ -80,7 +80,7 @@ class RegisterWindow(Screen):
 
     def signupbtn(self):
         # creating a DataFrame of the info
-        users = pd.read_csv('nivelogin.csv')
+        users = pd.read_csv('loginhp.csv')
         user = pd.DataFrame([[self.name2.text,  self.mobile.text, self.pwd.text]],
                             columns=['Name', 'Mobile', 'Password'])
         if self.mobile.text != "" and self.name2.text!=''and self.pwd.text!='':
@@ -88,7 +88,7 @@ class RegisterWindow(Screen):
 
                 # if email does not exist already then append to the csv file
                 # change current screen to log in the user now
-                user.to_csv('nivelogin.csv', mode='a', header=False, index=False)
+                user.to_csv('loginhp.csv', mode='a', header=False, index=False)
             self.name2.text = ""
             self.mobile.text = ""
             self.pwd.text = ""
@@ -107,7 +107,7 @@ class ForgetpasswordWindow(Screen):
         sm.current= 'main'
     def verify(self):
         if (self.newpwd.text and self.confirmpwd.text) != "":
-            users = pd.read_csv('nivelogin.csv')
+            users = pd.read_csv('loginhp.csv')
             u=self.username.text
             n=self.newpwd.text
             c=self.confirmpwd.text
@@ -121,7 +121,7 @@ class ForgetpasswordWindow(Screen):
                 self.confirmpwd.text=''
                 self.newpwd.text=''
             else:
-                users.to_csv('nivelogin.csv', mode='w', header=True, index=False)
+                users.to_csv('loginhp.csv', mode='w', header=True, index=False)
                 self.username.text=''
                 self.confirmpwd.text=''
                 self.newpwd.text=''
@@ -204,8 +204,8 @@ class HomepageWindow(Screen):
         sm.current='partiesandevents'
     def calendar(self):
         sm.current='calendar'
-    def dailyexpenses(self):
-        sm.current='dailyexpenses'
+    def bills(self):
+        sm.current='bills'
 
 #class for homepage settings window
 class homepagesettingsWindow(Screen):
@@ -303,6 +303,7 @@ class chatsettingsWindow(Screen):
     def backbtn(self):
         sm.current='chat'
 
+#shopping lists starts
 
 #form
 class AddNewForm(Widget):
@@ -322,9 +323,6 @@ class AddNewForm(Widget):
     def save(self):
         self.store.put(self.input)
 
-
-
-
 #recycle view for home screen
 class MyRecycleView(RecycleView):
 
@@ -340,7 +338,6 @@ class MyRecycleView(RecycleView):
             list_data.append({'text': item})
 
         self.data = list_data
-
 
 #class for shopping lists from homepage
 class shoppinglistsWindow(Screen):
@@ -362,52 +359,117 @@ class shoppinglistsettingsWindow(Screen):
         sm.current='shoppinglists'
 
 
+#form
+class AddNewFormP(Widget):
+    text_input = ObjectProperty(None)
+
+    input = StringProperty('')
+
+    store = JsonStore("dataP.json")
+
+    def submit_input(self):
+        self.input = self.text_input.text
+        print("Assign input: {}".format(self.input))
+        self.save()
+        self.input = ''
+        sm.current='partiesandevents'
+
+    def save(self):
+        self.store.put(self.input)
+
+#recycle view for home screen
+class MyRecycleViewP(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(MyRecycleViewP, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        store = JsonStore("dataP.json")
+        list_data = []
+        for item in store:
+            list_data.append({'text': item})
+
+        self.data = list_data
+
 #class for partiesandevents from homepage
 class partiesandeventsWindow(Screen):
-    def on_pre_enter(self):
-        label= Label(text ="Parties and Events", font_size ='20sp',
-            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
-            pos_hint ={"x":0.4,"y":0.92})
-        self.ids.float.add_widget(label)
-        backbtn=Button(text='<',size_hint=(0.03,0.02),pos_hint ={"x":0.05,"y":0.96},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        backbtn.bind(on_press=self.back)
-        self.ids.float.add_widget(backbtn)
-        settings=Button(text='',size_hint=(0.03,0.02),pos_hint ={"x":0.93,"y":0.96} ,
-                        background_normal= 'Settingsicon.png',
-                        background_down= 'Settingsicon.png',mipmap= True)
-        settings.bind(on_press=self.slsettings)
-        self.ids.float.add_widget(settings)
-        button1=Button(text='+',size_hint=(.1,.1),pos_hint ={'x':.4, 'y':.0},
-                        background_color =(0, 0, 0, 1),font_size="30",
-				        color =(1, 1, 1, 1),bold=True)
-        button1.bind(on_press=self.createnew)
-        self.ids.grid.add_widget(button1)
-    def createnew(self,event):
-        btn = Button(text="New Note",size_hint=(.8,.1),pos_hint ={'x':.1, 'y':.65},
-                        background_color =(0, 0, 0, 1),
-				        color =(1, 1, 1, 1),bold=True)
-        btn.bind(on_press=self.addn)
-        self.ids.grid.add_widget(btn)
-
-    def addn(self, event):
-        sm.current='partiesandeventsadd'
-    def back(self,event):
+    def back(self):
         sm.current='homepage'
-    def slsettings(self,event):
+    def slsettings(self):
         sm.current='partiesandeventssettings'
 
+#class for adding partiesandevents window
+class partiesandeventsaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(partiesandeventsaddWindow, self).__init__(**kwargs)
+        self.addNewFormP = AddNewFormP()
+        self.add_widget(self.addNewFormP)
 
 #class for settings option in partiesandevents window
 class partiesandeventssettingsWindow(Screen):
     def backbtn(self):
         sm.current='partiesandevents'
 
-#class for adding partiesandevents window
-class partiesandeventsaddWindow(Screen):
+
+
+
+#Daily expenses coding starts here
+
+#form
+class AddNewFormb(Widget):
+    text_input = ObjectProperty(None)
+
+    input = StringProperty('')
+
+    store = JsonStore("datab.json")
+
+    def submit_input(self):
+        self.input = self.text_input.text
+        print("Assign input: {}".format(self.input))
+        self.save()
+        self.input = ''
+        sm.current='dailyexpenses'
+
+    def save(self):
+        self.store.put(self.input)
+
+#recycle view for home screen
+class MyRecycleViewb(RecycleView):
+
+    def __init__(self, **kwargs):
+        super(MyRecycleViewb, self).__init__(**kwargs)
+        self.load_data()
+        Clock.schedule_interval(self.load_data, 1)
+
+    def load_data(self, *args):
+        store = JsonStore("datab.json")
+        list_data = []
+        for item in store:
+            list_data.append({'text': item})
+
+        self.data = list_data
+
+#class for dailyexpenses
+class dailyexpensesWindow(Screen):
     def back(self):
-        sm.current='partiesandevents'
+        sm.current='homepage'
+    def slsettings(self):
+        sm.current='calculator'
+
+#class for adding dailyexpenses
+class dailyexpensesaddWindow(Screen):
+    def __init__(self, **kwargs):
+        super(dailyexpensesaddWindow, self).__init__(**kwargs)
+        self.addNewFormb = AddNewFormb()
+        self.add_widget(self.addNewFormb)
+
+<<<<<<< HEAD
+=======
+
+
+#Calendar coding starts here
 
 #class for calendar option in homepage window
 class calendarWindow(Screen):
@@ -449,64 +511,16 @@ class calendardateWindow(Screen):
     def back(self):
         sm.current='calendar'
 
-#form
-class AddNewFormb(Widget):
-    text_input = ObjectProperty(None)
-
-    input = StringProperty('')
-
-    store = JsonStore("datab.json")
-
-    def submit_input(self):
-        self.input = self.text_input.text
-        print("Assign input: {}".format(self.input))
-        self.save()
-        self.input = ''
-        sm.current='dailyexpenses'
-
-    def save(self):
-        self.store.put(self.input)
 
 
 
-
-#recycle view for home screen
-class MyRecycleViewb(RecycleView):
-
-    def __init__(self, **kwargs):
-        super(MyRecycleViewb, self).__init__(**kwargs)
-        self.load_data()
-        Clock.schedule_interval(self.load_data, 1)
-
-    def load_data(self, *args):
-        store = JsonStore("datab.json")
-        list_data = []
-        for item in store:
-            list_data.append({'text': item})
-
-        self.data = list_data
-
-
-#class for bills from homepage
-class dailyexpensesWindow(Screen):
-    def back(self):
-        sm.current='homepage'
-    def slsettings(self):
-        sm.current='calculator'
-
-#class for adding bills
-class dailyexpensesaddWindow(Screen):
-    def __init__(self, **kwargs):
-        super(dailyexpensesaddWindow, self).__init__(**kwargs)
-        self.addNewFormb = AddNewFormb()
-        self.add_widget(self.addNewFormb)
-
+>>>>>>> 9f49af50e99a9173342cb005544701e6b0ddf150
 class WindowManager(ScreenManager):
     pass
 
 
 # kv file
-kv = Builder.load_file('nivelogin.kv')
+kv = Builder.load_file('hariselvakivymd.kv')
 
 sm = WindowManager()
 
@@ -540,15 +554,13 @@ sm.add_widget(shoppinglistsettingsWindow(name='shoppinglistsettings'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
 sm.add_widget(partiesandeventssettingsWindow(name='partiesandeventssettings'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
-sm.add_widget(calendarWindow(name='calendar'))
-sm.add_widget(calendardateWindow(name='calendardate'))
 sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
 sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
-
-
+sm.add_widget(calendarWindow(name='calendar'))
+sm.add_widget(calendardateWindow(name='calendardate'))
 
 # reading all the data stored
-users = pd.read_csv('nivelogin.csv')
+users = pd.read_csv('loginhp.csv')
 
 
 
