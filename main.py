@@ -82,7 +82,7 @@ class Notes(Screen):
     data_for_widgets = AliasProperty(_get_data_for_widgets, bind=['data'])
 
 
-class NoteApp(App):
+class mainApp(App):
 
     def build(self):
         self.notes = Notes(name='notes')
@@ -160,4 +160,4 @@ class NoteApp(App):
 
 
 if __name__ == '__main__':
-    NoteApp().run()
+    mainApp().run()

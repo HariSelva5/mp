@@ -5,6 +5,7 @@ import pandas as pd
 import random as r
 import calendar
 import winsound
+import emoji
 from win10toast import ToastNotifier
 from kivymd.uix.picker import MDTimePicker
 from twilio.rest import Client
@@ -490,6 +491,8 @@ class MyRecycleViewb(RecycleView):
 class dailyexpensesWindow(Screen):
     def back(self):
         sm.current='homepage'
+    def slsettings(self):
+        sm.current='calculator'
 
 #class for adding bills
 class dailyexpensesaddWindow(Screen):
@@ -497,9 +500,6 @@ class dailyexpensesaddWindow(Screen):
         super(dailyexpensesaddWindow, self).__init__(**kwargs)
         self.addNewFormb = AddNewFormb()
         self.add_widget(self.addNewFormb)
-
-
-
 
 class WindowManager(ScreenManager):
     pass
@@ -544,7 +544,6 @@ sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
 sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
 sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
-
 
 
 
