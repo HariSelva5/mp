@@ -222,10 +222,6 @@ class homepagesettingsWindow(Screen):
             sm.current='main'
 
 
-            
-
-    
-
 
 #class for notification button from homepage
 class supportWindow(Screen):
