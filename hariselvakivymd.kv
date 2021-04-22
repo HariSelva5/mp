@@ -4,8 +4,6 @@ WindowManager:
     ForgetpasswordWindow:
     HomepageWindow:
 
- 
-
 
 # GUI for pop up window 
 <P>: 
@@ -1468,13 +1466,18 @@ WindowManager:
 
 #GUI for paint window
 <paintWindow>:
-    Painter
-    # Button:
-    #     text:"clear"
-    #     size_hint:0.2,0.2
-    #     pos_hint:{"x":0.01,"y":0.01}
-    #     on_release:
-    #         root.clear()
+    Painter:
+        id:painter
+    Button:
+        text:"Back"
+        size_hint:0.5,0.05
+        pos_hint:{"x":0.01,"y":0.94}
+        on_release:app.root.current='homepage'
+    Button:
+        text:"clear"
+        size_hint:0.2,0.2
+        pos_hint:{"x":0.01,"y":0.01}
+        on_release:painter.canvas.clear() ; painter.canvas.after.clear()
     FloatLayout:
         id:float
 

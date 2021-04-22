@@ -245,16 +245,11 @@ class AddNewForm(Widget):
     input2 = StringProperty('')
 
     store = JsonStore("data.json")
-
-    # def summa(self):
-    #     sm.current='shoppinglistview'
-        
+     
     def submit_input(self):
         self.input1 = self.title_input.text
         self.input2 = self.item_input.text
         self.store.put(self.input1, items=self.input2)
-        # self.title_input.text = ''
-        # self.item_input.text = ''
         sm.current='shoppinglists'
 
     
@@ -623,38 +618,9 @@ class Painter(Widget):
 
 
 class paintWindow(Screen):
+    pass
 
-    def on_pre_enter(self):
-        button1=Button(text='clear',size_hint=(.3,.3),pos_hint ={'x':.01, 'y':.01},
-                        background_color =(0, 0, 0, 1),font_size="20",
-				        color =(1, 1, 1, 1),bold=True)
-        button1.bind(on_press=self.clear)
-        self.ids.float.add_widget(button1)
-
-    def clear(self,event):
-        # self.painter = Painter()
-        # self.painter.canvas.clear()
-        #self.canvas.clear()
-        sm.current='homepage'
-        #self.remove_widget(self.button1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 #-----------------------------------------------------------------------------
 
