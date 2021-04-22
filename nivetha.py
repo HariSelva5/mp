@@ -465,56 +465,6 @@ class dailyexpensesaddWindow(Screen):
         self.addNewFormb = AddNewFormb()
         self.add_widget(self.addNewFormb)
 
-<<<<<<< HEAD
-=======
-
-
-#Calendar coding starts here
-
-#class for calendar option in homepage window
-class calendarWindow(Screen):
-    alarm=ObjectProperty(None)
-    def show_time_picker(self):
-        from datetime import datetime
-        # Must be a datetime object
-        now = datetime.now()
-        time_dialog = MDTimePicker()
-        time_dialog.set_time(now)
-        time_dialog.bind(time=self.get_time)
-        time_dialog.open()
-    def get_time(self, instance, time):
-        label= Label(text ="Time for alarm is {}".format(time), font_size ='15sp',
-            color =[0, 0, 0, 1],size_hint = (0.2, 0.1),
-            pos_hint ={"x":0.4,"y":0.7})
-        self.ids.float.add_widget(label)
-
-    
-    def textareas(self):
-        #print(self.alarm.text)
-        def timer (remider,seconds):
-            k=10
-            notificator=ToastNotifier()
-            notificator.show_toast("Reminder",f"""Alarm will go off in {seconds} Seconds.""",duration=k)
-            notificator.show_toast(f"Reminder",remider,duration=k)
-
-        #alarm
-        frequency=5500
-        duration=1000
-        winsound.Beep(frequency,duration)
-
-        words=self.alarm.text
-        sec=10
-        timer(words,sec)
-
-#class for calendardate window from calendar window
-class calendardateWindow(Screen):
-    def back(self):
-        sm.current='calendar'
-
-
-
-
->>>>>>> 9f49af50e99a9173342cb005544701e6b0ddf150
 class WindowManager(ScreenManager):
     pass
 
