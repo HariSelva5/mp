@@ -50,28 +50,27 @@ def popFun():
 
 
 class MainWindow(Screen):
-    
-    mobile = ObjectProperty(None)
-    pwd = ObjectProperty(None)
-
-    def validate(self):
-        # validating if the email already exists
-        users = pd.read_csv('loginhp.csv')
-        if self.username.text=='' and self.pwd.text=='':
-            if self.username.text not in users['Name'].unique():
-                popFun()
-        else:
-            account = pd.DataFrame([[self.username.text, self.pwd.text]], columns=['Name', 'Password'])
-            account.to_csv('account.csv', index=False, header=True)
-            # switching the current screen to display validation result
-            sm.current = 'homepage'
-            # reset TextInput widget
-            self.username.text = ""
-            self.pwd.text = ""
     def forgotpassword(self):
         sm.current='otpmobile'
     def backbutton(self):
         sm.current='login'
+    def validate(self):
+        username = ObjectProperty(None)
+        pwd = ObjectProperty(None)
+        # validating if the email already exists
+        users = pd.read_csv('loginhp.csv')
+        if self.username.text!='' and self.pwd.text!='':
+            if self.username.text not in users['Name'].unique():
+                popFun()
+            else:
+                account = pd.DataFrame([[self.username.text, self.pwd.text]], columns=['Name', 'Password'])
+                account.to_csv('account.csv', index=False, header=True)
+                # switching the current screen to display validation result
+                sm.current = 'homepage'
+                # reset TextInput widget
+                self.username.text = ""
+                self.pwd.text = ""
+    
  
         
 class RegisterWindow(Screen):
@@ -216,9 +215,13 @@ class homepagesettingsWindow(Screen):
         sm.current='forgetpassword'
     def deleteaccount(self):
         dele=pd.read_csv("loginhp.csv")
+        df3=pd.DataFrame(dele)
         if self.usertext.text in dele['Name'].unique():
-            usert=self.usertext.text
-            
+            df3.drop(df3[df3['Name']==self.usertext.text].index, inplace = True)
+            df3.to_csv("loginhp.csv",index=False )
+            sm.current='main'
+
+
             
 
     
@@ -633,10 +636,10 @@ class paintWindow(Screen):
         self.ids.float.add_widget(button1)
 
     def clear(self,event):
-        self.painter = Painter()
-        self.painter.canvas.clear()
+        # self.painter = Painter()
+        # self.painter.canvas.clear()
         #self.canvas.clear()
-        #sm.current='homepage'
+        sm.current='homepage'
         #self.remove_widget(self.button1)
 
 
