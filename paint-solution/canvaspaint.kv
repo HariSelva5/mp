@@ -1,0 +1,128 @@
+<Container>:
+    orientation: "vertical"
+    on_line_size: paintWidget.set_line_size(self.line_size)
+    on_color: paintWidget.set_color(self.color)
+    on_tool_mode: paintWidget.set_mode(self.tool_mode)
+    BoxLayout:
+        CanvasPaintWidget:
+            id:paintWidget
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        Label:
+            id: action_label
+            valign: "bottom"
+            halign: "center"
+            padding_y: "15sp"
+            text_size: self.size
+            bold: True
+            text: root.action_text
+            font_size: "30sp"
+            outline_width: "3sp"
+            outline_color: (.2, .2, .2, 1)
+            color: (0, .6, 0, 1)
+
+<MenuPopup>:
+    size_hint: 0.5, 0.5
+    auto_dismiss: True
+    title: "Board Preferences"
+    BoardPref:
+        id:boardPref
+
+
+<BoardPref>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            # self here refers to the widget i.e BoxLayout
+            pos: self.parent.pos
+            size: self.parent.size
+    size_hint: 1, 1
+
+    GridLayout:
+        cols:2
+        rows:3
+        padding:10
+        spacing:10
+        size: root.width * 0.8, root.height * 0.8
+        row_default_height: 30
+        row_force_default: True
+        center: root.width / 2, root.height / 2
+        Label:
+            text: 'Tool'
+            color: (0, .6, 0, 1)
+        GridLayout:
+            cols:2
+            ToggleButton:
+                group: 'tool'
+                text: 'Pencil'
+                state: 'down'
+                allow_no_selection: False
+                size_hint_x: None
+                width: self.texture_size[0]
+                padding_x: '15dp'
+                size_hint: (.2, None)
+                height: 30
+                on_state: app.root.tool_mode = 'pencil' + self.state
+
+            ToggleButton:
+                id: constant
+                group: 'tool'
+                text: 'Eraser'
+                size_hint: (.2, None)
+                height: 30
+                allow_no_selection: False
+                size_hint_x: None
+                width: self.texture_size[0]
+                padding_x: '15dp'
+                on_state: app.root.tool_mode = 'eraser' + self.state
+
+
+        Label:
+            text: 'Line Width'
+            color: (0, .6, 0, 1)
+            halign: "left"
+        Slider:
+            id: stroke_size
+            size_hint: (.2, None)
+            height: 30
+            on_value: app.root.line_size = self.value
+        Label:
+            text: 'Color'
+            halign: "left"
+            color: (0, .6, 0, 1)
+        StandardButton:
+            text: 'Color'
+            on_press: app.root.select_color()
+
+<ColorPopup>:
+    title: 'Select Color'
+    size: 400,400
+    size_hint: None, None
+	title_size: 16
+	on_dismiss: app.root.color = color_wheel.color
+    ColorPicker:
+        id: color_wheel
+        color: app.root.color
+        Button:
+            text: 'Done'
+            pos_hint: {'center_x': .76, 'y': .03}
+            size: 100, 50
+            size_hint: None, None
+            on_press: root.dismiss()
+
+<MenuLabel@Label>:
+    color: 0, 0, 0, 1
+
+
+<StandardButton>:
+	font_size: 14
+	size_hint_x: None
+	size_hint_y: None
+	height: 25
+	width: 60
+
+
+
