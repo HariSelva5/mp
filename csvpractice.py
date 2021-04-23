@@ -14,12 +14,13 @@
 
 
 import pandas as pd
-p=pd.read_csv("csvprac.csv")
-df3=pd.DataFrame(p)
+p=pd.read_csv("1.csv")
+p.to_csv("2.csv")
+# df3=pd.DataFrame(p)
 
-if "a" in p['Name'].unique():
-    df3.drop(df3[df3['Name']=="a"].index, inplace = True)
-    df3.to_csv("csvprac.csv",index=False )
+# if "a" in p['Name'].unique():
+#     df3.drop(df3[df3['Name']=="a"].index, inplace = True)
+#     df3.to_csv("csvprac.csv",index=False )
 
 
 # u="Nivetha"

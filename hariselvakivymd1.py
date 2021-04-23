@@ -229,13 +229,9 @@ class supportWindow(Screen):
         sm.current= 'homepage'
 
 
-
+#---------------------------------------------------------------------------------------------------------------
 
 #shopping lists starts
-
-class shoppinglistviewWindow(Screen):
-    pass
-
 
 #form
 class AddNewForm(Widget):
@@ -250,6 +246,8 @@ class AddNewForm(Widget):
         self.input1 = self.title_input.text
         self.input2 = self.item_input.text
         self.store.put(self.input1, items=self.input2)
+        self.title_input.text=''
+        self.item_input.text=''
         sm.current='shoppinglists'
 
     
@@ -264,33 +262,28 @@ class shoppinglistviewWindow(Screen):
     store = JsonStore("data.json")
 
     def viewnote(self):
+        #print(self.title_input.text)
         store = JsonStore("data.json")
-        for key in store.keys():
-            h=key
-            break
-        k=store.get("Note1")["items"]
-        self.title_input.text=h
+        h=self.title_input.text
+        k=store.get(h)["items"]
+        #print(k)
+        #self.title_input.text=h
         self.item_input.text=k
-        self.input1 = self.title_input.text
-        self.input2 = self.item_input.text
-        self.store.put(self.input1, items=self.input2)
         
+        
+    def closenote(self):
+        self.title_input.text=''
+        self.item_input.text=''
+        sm.current='shoppinglists'
 
-        
+
     def delete(self):
         store = JsonStore("data.json")
-        for key in store.keys():
-            h=key
-            break
-        k=store.get("Note1")["items"]
-        self.title_input.text=h
-        self.item_input.text=k
-        self.input1 = self.title_input.text
-        self.input2 = self.item_input.text
-        def dele(self):
-            self.store.delete(self.input1)# note 1 is deleted
-            sm.current='shoppinglists'
-        dele(self)
+        h=self.title_input.text
+        k=store.get(h)["items"]
+        self.store.delete(h)
+        sm.current='shoppinglists'
+      
         
         
            
@@ -299,7 +292,7 @@ outer=shoppinglistviewWindow()
 
 class RVItem(Factory.Button):
     def on_release(self):
-        sm.current='shoppinglistview'
+        pass
    
     
     
@@ -334,7 +327,7 @@ class shoppinglistaddWindow(Screen):
         self.add_widget(self.addNewForm)
 
 #shopping lists over
-#--------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------
 
 
 #parties and events starts here

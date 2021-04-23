@@ -823,10 +823,10 @@ WindowManager:
     FloatLayout:
         TextInput:
             id: input1
-            #hint_text: "Add Title"
+            hint_text: "Enter Note name you want to view"
             font_size:'10sp'
-            size_hint:0.5,0.05
-            pos_hint:{"x":0.2,"y":0.94}
+            size_hint:0.55,0.05
+            pos_hint:{"x":0.25,"y":0.94}
         TextInput:
             id: input2
             multiline: True
@@ -836,11 +836,20 @@ WindowManager:
             pos_hint:{"x":0.12,"y":0.1}
 
         Button:
-            text:'Click&View'
-            size_hint:0.4,0.05
-            pos_hint:{"x":0.05,"y":0.04}
+            text:'Open Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.55,"y":0.84}
             on_release: 
                 root.viewnote()
+
+        Button:
+            text:'Close Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.15,"y":0.84}
+            on_release: 
+                root.closenote()
             
         Button:
             text:'Delete'
@@ -919,6 +928,18 @@ WindowManager:
                 pos_hint : {"x" : 0.9, "y" : 0.01} 
                 on_release: 
                     app.root.current= 'shoppinglistadd'
+            Button:
+                text: 'View Note'
+                font_size:"10sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.25,0.05)
+                pos_hint : {"x" : 0.35, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'shoppinglistview'
 
 <MyRecycleView>:
     viewclass: 'RVItem'
