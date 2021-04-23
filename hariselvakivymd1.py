@@ -262,12 +262,9 @@ class shoppinglistviewWindow(Screen):
     store = JsonStore("data.json")
 
     def viewnote(self):
-        #print(self.title_input.text)
         store = JsonStore("data.json")
         h=self.title_input.text
         k=store.get(h)["items"]
-        #print(k)
-        #self.title_input.text=h
         self.item_input.text=k
         
         
@@ -286,16 +283,10 @@ class shoppinglistviewWindow(Screen):
       
         
         
-           
-
-outer=shoppinglistviewWindow()
-
 class RVItem(Factory.Button):
     def on_release(self):
         pass
    
-    
-    
 
 
 #recycle view for home screen
@@ -335,7 +326,7 @@ class shoppinglistaddWindow(Screen):
 
 class RVitem(Factory.Button):
     def on_release(self):
-        sm.current='partiesandeventsadd'
+        pass
 
 #form
 class Addnewf(Widget):
@@ -353,6 +344,36 @@ class Addnewf(Widget):
         self.titlein.text = ''
         self.itemin.text = ''
         sm.current='partiesandevents'
+
+
+class partiesandeventsviewWindow(Screen):
+    itemin = ObjectProperty(None)
+    titlein= ObjectProperty(None)
+    inone = StringProperty('')
+    intwo = StringProperty('')
+
+    store = JsonStore("partydata.json")
+
+    def viewnote(self):
+        store = JsonStore("partydata.json")
+        h=self.titlein.text
+        k=store.get(h)["items"]
+        self.itemin.text=k
+        
+        
+    def closenote(self):
+        self.titlein.text=''
+        self.itemin.text=''
+        sm.current='partiesandevents'
+
+
+    def deleteparty(self):
+        store = JsonStore("partydata.json")
+        h=self.titlein.text
+        k=store.get(h)["items"]
+        self.store.delete(h)
+        sm.current='partiesandevents'
+
 
 #recycle view for home screen
 class Myrview(RecycleView):
@@ -412,6 +433,37 @@ class Anf(Widget):
         self.iteminput.text = ''
         sm.current='dailyexpenses'
 
+
+class dailyexpensesviewWindow(Screen):
+
+    iteminput = ObjectProperty(None)
+    titleinput= ObjectProperty(None)
+    inputone = StringProperty('')
+    inputtwo = StringProperty('')
+
+    dailystore = JsonStore("dailydata.json")
+
+    def viewnotedaily(self):
+        dailystore = JsonStore("dailydata.json")
+        h=self.titleinput.text
+        k=dailystore.get(h)["items"]
+        self.iteminput.text=k
+        
+        
+    def closenotedaily(self):
+        self.titleinput.text=''
+        self.iteminput.text=''
+        sm.current='dailyexpenses'
+
+
+    def deletedaily(self):
+        dailystore = JsonStore("dailydata.json")
+        h=self.titleinput.text
+        k=dailystore.get(h)["items"]
+        self.dailystore.delete(h)
+        sm.current='dailyexpenses'
+
+
 #recycle view for home screen
 class Myrecview(RecycleView):
 
@@ -453,7 +505,7 @@ class CalculatorWindow(Screen):
             except Exception:
                 self.display.text = "Error"
     def back(self):
-        sm.current='dailyexpenses'
+        sm.current='dailyexpensesview'
 
 
 #class for locker window
@@ -486,12 +538,9 @@ class lockerWindow(Screen):
 
 
 
-
-
-
 class Recyvi(Factory.Button):
     def on_release(self):
-        sm.current='lockerstoreadd'
+        pass
 
 #form
 class Afn(Widget):
@@ -510,6 +559,39 @@ class Afn(Widget):
         self.intt.text = ''
         self. ini.text = ''
         sm.current='lockerstore'
+
+
+
+class lockerstoreviewWindow(Screen):
+
+    ini = ObjectProperty(None)
+    intt= ObjectProperty(None)
+    infirst = StringProperty('')
+    insecond = StringProperty('')
+
+    lockstore = JsonStore("lockerstore.json")
+
+    def viewnotelocker(self):
+        lockstore = JsonStore("lockerstore.json")
+        h=self.intt.text
+        k=lockstore.get(h)["items"]
+        self.ini.text=k
+        
+        
+    def closenotelocker(self):
+        self.intt.text=''
+        self.ini.text=''
+        sm.current='lockerstore'
+
+
+    def delnotelocker(self):
+        lockstore = JsonStore("lockerstore.json")
+        h1=self.intt.text
+        self.lockstore.delete(h1)
+        sm.current='lockerstore'
+
+  
+
 
 #recycle view for home screen
 class Minerrec(RecycleView):
@@ -643,12 +725,15 @@ sm.add_widget(shoppinglistaddWindow(name='shoppinglistadd'))
 sm.add_widget(shoppinglistviewWindow(name='shoppinglistview'))
 sm.add_widget(partiesandeventsWindow(name='partiesandevents'))
 sm.add_widget(partiesandeventsaddWindow(name='partiesandeventsadd'))
+sm.add_widget(partiesandeventsviewWindow(name='partiesandeventsview'))
 sm.add_widget(dailyexpensesWindow(name='dailyexpenses'))
 sm.add_widget(dailyexpensesaddWindow(name='dailyexpensesadd'))
+sm.add_widget(dailyexpensesviewWindow(name='dailyexpensesview'))
 sm.add_widget(CalculatorWindow(name='Calculator'))
 sm.add_widget(lockerWindow(name='locker'))
 sm.add_widget(lockerstoreWindow(name='lockerstore'))
 sm.add_widget(lockerstoreaddWindow(name='lockerstoreadd'))
+sm.add_widget(lockerstoreviewWindow(name='lockerstoreview'))
 sm.add_widget(calendarWindow(name='calendar'))
 sm.add_widget(calendardateWindow(name='calendardate'))
 sm.add_widget(paintWindow(name='paint'))

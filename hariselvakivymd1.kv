@@ -1026,6 +1026,77 @@ WindowManager:
                 on_release: 
                     app.root.current= 'partiesandeventsadd'
 
+            Button:
+                text: 'View Note'
+                font_size:"10sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.25,0.05)
+                pos_hint : {"x" : 0.35, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'partiesandeventsview'
+
+
+<partiesandeventsviewWindow>:
+    itemin: intwo
+    titlein: inone
+    FloatLayout:
+        TextInput:
+            id: inone
+            hint_text: "Enter Note name you want to view"
+            font_size:'10sp'
+            size_hint:0.55,0.05
+            pos_hint:{"x":0.25,"y":0.94}
+        TextInput:
+            id: intwo
+            multiline: True
+            font_size:'10sp'
+            #hint_text: "Enter list items.."
+            size_hint:0.8,0.7
+            pos_hint:{"x":0.12,"y":0.1}
+
+        Button:
+            text:'Open Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.55,"y":0.84}
+            on_release: 
+                root.viewnote()
+
+        Button:
+            text:'Close Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.15,"y":0.84}
+            on_release: 
+                root.closenote()
+            
+        Button:
+            text:'Delete'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.55,"y":0.04}
+            on_release: 
+                root.deleteparty()
+        
+        Button:
+            #back button
+            text:'<'
+            font_size:"20sp"
+            color: [1,1,1,1]
+            background_color:(0,0,0, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+            size_hint :  (0.1,0.05)
+            pos_hint : {"x" : 0.01, "y" : 0.94} 
+            on_release: 
+                app.root.current= 'partiesandevents'
+                root.manager.transition.direction = "right"
+
+
 
 <Myrview>:
     viewclass: 'RVitem'
@@ -1083,6 +1154,77 @@ WindowManager:
         on_release: 
             root.submitinput()
 
+
+
+<dailyexpensesviewWindow>:
+    iteminput: inputtwo
+    titleinput: inputone
+    FloatLayout:
+        TextInput:
+            id: inputone
+            hint_text: "Enter Note name you want to view"
+            font_size:'10sp'
+            size_hint:0.55,0.05
+            pos_hint:{"x":0.25,"y":0.94}
+        TextInput:
+            id: inputtwo
+            multiline: True
+            font_size:'10sp'
+            #hint_text: "Enter list items.."
+            size_hint:0.8,0.7
+            pos_hint:{"x":0.12,"y":0.1}
+
+        Button:
+            text:'Open Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.55,"y":0.84}
+            on_release: 
+                root.viewnotedaily()
+
+        Button:
+            text:'Close Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.15,"y":0.84}
+            on_release: 
+                root.closenotedaily()
+            
+        Button:
+            text:'Delete'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.55,"y":0.01}
+            on_release: 
+                root.deletedaily()
+        
+        Button:
+            #back button
+            text:'<'
+            font_size:"20sp"
+            color: [1,1,1,1]
+            background_color:(0,0,0, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+            size_hint :  (0.1,0.05)
+            pos_hint : {"x" : 0.01, "y" : 0.94} 
+            on_release: 
+                app.root.current= 'dailyexpenses'
+                root.manager.transition.direction = "right"
+
+        Button:
+            #calculator button
+            text: ''
+            background_normal: 'cal.png'
+            background_down: 'cal.png'
+            mipmap: True
+            size_hint : 0.1,0.05
+            pos_hint : {"x":0.01,"y":0.01} 
+            on_release: 
+                app.root.current='Calculator'
+                root.manager.transition.direction = "right"
+
+
 #GUI for shoppinglists option in homepage
 <dailyexpensesWindow>:
     FloatLayout:
@@ -1124,22 +1266,24 @@ WindowManager:
                     Color:
                         rgba: self.background_color
                 size_hint :  (0.45,0.05)
-                pos_hint : {"x" : 0.3, "y" : 0.1} 
+                pos_hint : {"x" : 0.01, "y" : 0.1} 
                 on_release: 
                     app.root.current= 'locker'
-            Button:
-            #calculator button
-                text: ''
-                background_normal: 'cal.png'
-                background_down: 'cal.png'
-                mipmap: True
-                size_hint : 0.1,0.05
-                pos_hint : {"x":0.45,"y":0.01} 
-                on_release: 
-                    app.root.current='Calculator'
-                    root.manager.transition.direction = "right"
-          
 
+            Button:
+                text: 'View Note'
+                font_size:"20sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.45,0.05)
+                pos_hint : {"x" : 0.55, "y" : 0.1} 
+                on_release: 
+                    app.root.current= 'dailyexpensesview'
+
+            
 <Myrecview>:
     viewclass: 'RV'
     RecycleBoxLayout:
@@ -1286,6 +1430,7 @@ WindowManager:
             on_release: 
 				root.locker() 
 				root.manager.transition.direction = "right"
+        
 
 
 
@@ -1311,6 +1456,65 @@ WindowManager:
         pos: 80,30
         on_release: 
             root.submittingginput()
+
+
+<lockerstoreviewWindow>:
+    ini: insecond
+    intt: infirst
+    FloatLayout:
+        TextInput:
+            id: infirst
+            hint_text: "Enter Note name you want to view"
+            font_size:'10sp'
+            size_hint:0.55,0.05
+            pos_hint:{"x":0.25,"y":0.94}
+        TextInput:
+            id: insecond
+            multiline: True
+            font_size:'10sp'
+            #hint_text: "Enter list items.."
+            size_hint:0.8,0.7
+            pos_hint:{"x":0.12,"y":0.1}
+
+        Button:
+            text:'Open Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.55,"y":0.84}
+            on_release: 
+                root.viewnotelocker()
+
+        Button:
+            text:'Close Note'
+            font_size:"10sp"
+            size_hint:0.2,0.05
+            pos_hint:{"x":0.15,"y":0.84}
+            on_release: 
+                root.closenotelocker()
+            
+        Button:
+            text:'Delete'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.55,"y":0.01}
+            on_release: 
+                root.delnotelocker()
+        
+        Button:
+            #back button
+            text:'<'
+            font_size:"20sp"
+            color: [1,1,1,1]
+            background_color:(0,0,0, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+            size_hint :  (0.1,0.05)
+            pos_hint : {"x" : 0.01, "y" : 0.94} 
+            on_release: 
+                app.root.current= 'lockerstore'
+                root.manager.transition.direction = "right"
+
+
 
 #GUI for shoppinglists option in homepage
 <lockerstoreWindow>:
@@ -1344,6 +1548,19 @@ WindowManager:
                 pos_hint : {"x" : 0.9, "y" : 0.01} 
                 on_release: 
                     app.root.current= 'lockerstoreadd'
+
+            Button:
+                text: 'View Note'
+                font_size:"10sp"
+                color: [1,1,1,1]
+                background_color:(0,0,0, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                size_hint :  (0.25,0.05)
+                pos_hint : {"x" : 0.35, "y" : 0.01} 
+                on_release: 
+                    app.root.current= 'lockerstoreview'
             
 <Minerrec>:
     viewclass: 'Recyvi'
