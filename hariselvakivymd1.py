@@ -7,6 +7,7 @@ import random as r
 import calendar
 import winsound
 import json
+import clipboard
 from kivy.graphics import Color, Ellipse, Line
 from kivy.graphics import Line
 from win10toast import ToastNotifier
@@ -47,6 +48,7 @@ def popFun():
     window = Popup(title="popup", content=show,
                    size_hint=(None, None), size=(300, 100))
     window.open()
+
 
 
 class MainWindow(Screen):
@@ -181,8 +183,6 @@ class otpmobileWindow(Screen):
 
     def back(self):
         sm.current= 'main'
-    def next(self):
-        sm.current='logdata'
     def sendotp():
         sm.current='forgotpassword'
 
@@ -262,24 +262,48 @@ class shoppinglistviewWindow(Screen):
     store = JsonStore("data.json")
 
     def viewnote(self):
-        store = JsonStore("data.json")
-        h=self.title_input.text
-        k=store.get(h)["items"]
-        self.item_input.text=k
-        
+        if self.title_input.text=='':
+            popFun()
+        else:
+            store = JsonStore("data.json")
+            if store.exists(self.title_input.text):
+                h=self.title_input.text
+                k=store.get(h)["items"]
+                self.item_input.text=k
+            else:
+                popFun()
         
     def closenote(self):
-        self.title_input.text=''
-        self.item_input.text=''
-        sm.current='shoppinglists'
+        if self.title_input.text=='':
+            popFun()
+        else:
+            store = JsonStore("data.json")
+            if store.exists(self.title_input.text):
+                self.title_input.text=''
+                self.item_input.text=''
+                sm.current='shoppinglists'
+            else:
+                popFun()
 
 
     def delete(self):
-        store = JsonStore("data.json")
-        h=self.title_input.text
-        k=store.get(h)["items"]
-        self.store.delete(h)
-        sm.current='shoppinglists'
+        if self.title_input.text=='':
+            popFun()
+        else:
+            store = JsonStore("data.json")
+            if store.exists(self.title_input.text):
+                h=self.title_input.text
+                k=store.get(h)["items"]
+                self.store.delete(h)
+                sm.current='shoppinglists'
+            else:
+                popFun()
+
+    def copy(self):
+        clipboard.copy(self.item_input.text)
+        b=clipboard.paste()
+        
+
       
         
         
@@ -355,24 +379,47 @@ class partiesandeventsviewWindow(Screen):
     store = JsonStore("partydata.json")
 
     def viewnote(self):
-        store = JsonStore("partydata.json")
-        h=self.titlein.text
-        k=store.get(h)["items"]
-        self.itemin.text=k
+        if self.titlein.text=='':
+            popFun()
+        else:
+            store = JsonStore("partydata.json")
+            if store.exists(self.titlein.text):
+                h=self.titlein.text
+                k=store.get(h)["items"]
+                self.itemin.text=k
+            else:
+                popFun()
         
         
     def closenote(self):
-        self.titlein.text=''
-        self.itemin.text=''
-        sm.current='partiesandevents'
+        if self.titlein.text=='':
+            popFun()
+        else:
+            store = JsonStore("partydata.json")
+            if store.exists(self.titlein.text):
+                self.titlein.text=''
+                self.itemin.text=''
+                sm.current='partiesandevents'
+            else:
+                popFun()
+
+    def copyparty(self):
+        clipboard.copy(self.itemin.text)
+        b=clipboard.paste()
 
 
     def deleteparty(self):
-        store = JsonStore("partydata.json")
-        h=self.titlein.text
-        k=store.get(h)["items"]
-        self.store.delete(h)
-        sm.current='partiesandevents'
+        if self.titlein.text=='':
+            popFun()
+        else:    
+            store = JsonStore("partydata.json")
+            if store.exists(self.titlein.text):
+                h=self.titlein.text
+                k=store.get(h)["items"]
+                self.store.delete(h)
+                sm.current='partiesandevents'
+            else:
+                popFun()
 
 
 #recycle view for home screen
@@ -444,24 +491,47 @@ class dailyexpensesviewWindow(Screen):
     dailystore = JsonStore("dailydata.json")
 
     def viewnotedaily(self):
-        dailystore = JsonStore("dailydata.json")
-        h=self.titleinput.text
-        k=dailystore.get(h)["items"]
-        self.iteminput.text=k
-        
+        if self.titleinput.text=='':
+            popFun()
+        else:
+            dailystore = JsonStore("dailydata.json")
+            if dailystore.exists(self.titleinput.text):
+                h=self.titleinput.text
+                k=dailystore.get(h)["items"]
+                self.iteminput.text=k
+            else:
+                popFun()
         
     def closenotedaily(self):
-        self.titleinput.text=''
-        self.iteminput.text=''
-        sm.current='dailyexpenses'
+        if self.titleinput.text=='':
+            popFun()
+        else:
+            dailystore = JsonStore("dailydata.json")
+            if dailystore.exists(self.titleinput.text):
+                self.titleinput.text=''
+                self.iteminput.text=''
+                sm.current='dailyexpenses'
+            else:
+                popFun()
+        
+
+    def copydaily(self):
+        clipboard.copy(self.iteminput.text)
+        b=clipboard.paste()
 
 
     def deletedaily(self):
-        dailystore = JsonStore("dailydata.json")
-        h=self.titleinput.text
-        k=dailystore.get(h)["items"]
-        self.dailystore.delete(h)
-        sm.current='dailyexpenses'
+        if self.titleinput.text=='':
+            popFun()
+        else:
+            dailystore = JsonStore("dailydata.json")
+            if dailystore.exists(self.titleinput.text):
+                h=self.titleinput.text
+                k=dailystore.get(h)["items"]
+                self.dailystore.delete(h)
+                sm.current='dailyexpenses'
+            else:
+                popFun()
 
 
 #recycle view for home screen
@@ -572,23 +642,46 @@ class lockerstoreviewWindow(Screen):
     lockstore = JsonStore("lockerstore.json")
 
     def viewnotelocker(self):
-        lockstore = JsonStore("lockerstore.json")
-        h=self.intt.text
-        k=lockstore.get(h)["items"]
-        self.ini.text=k
+        if self.intt.text=='':
+            popFun()
+        else:
+            lockstore = JsonStore("lockerstore.json")
+            if lockstore.exists(self.intt.text):
+                h=self.intt.text
+                k=lockstore.get(h)["items"]
+                self.ini.text=k
+            else:
+                popFun()
         
         
     def closenotelocker(self):
-        self.intt.text=''
-        self.ini.text=''
-        sm.current='lockerstore'
+        if self.intt.text=='':
+            popFun()
+        else:
+            lockstore = JsonStore("lockerstore.json")
+            if lockstore.exists(self.intt.text):
+                self.intt.text=''
+                self.ini.text=''
+                sm.current='lockerstore'
+            else:
+                popFun()
+        
 
+    def copylocker(self):
+        clipboard.copy(self.ini.text)
+        b=clipboard.paste()
 
     def delnotelocker(self):
-        lockstore = JsonStore("lockerstore.json")
-        h1=self.intt.text
-        self.lockstore.delete(h1)
-        sm.current='lockerstore'
+        if self.intt.text=='':
+            popFun()
+        else:
+            lockstore = JsonStore("lockerstore.json")
+            if lockstore.exists(self.intt.text):
+                h1=self.intt.text
+                self.lockstore.delete(h1)
+                sm.current='lockerstore'
+            else:
+                popFun()
 
   
 

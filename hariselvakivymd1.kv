@@ -12,8 +12,6 @@ WindowManager:
 		size_hint : 0.2, 0.1
 		pos_hint : {"x" : 0.3, "top" : 0.8} 
 
-
-
 <MainWindow>:
     username: username
 	pwd: pwd 
@@ -449,23 +447,7 @@ WindowManager:
             on_press: 
 				root.back() 
 				root.manager.transition.direction = "up"
-        Button:
-            #back button
-            text: 'Next'
-            font_size: 15
-            font_name: "verdana"
-            color: [1,1,1,1]
-            bold: True
-            italic: True
-            #background_color: rgba(0,0,0,0)
-            # background_normal: 'back_btn_round.png'
-            # background_down: 'back_btn_round.png'
-            mipmap: True
-            size_hint : 0.29, 0.05
-			pos_hint : {"x":0.75, "top":0.96} 
-            on_press: 
-				root.next() 
-				root.manager.transition.direction = "up"
+
         Label: 
             text : "Enter Username:"
             font_size: 15
@@ -850,7 +832,14 @@ WindowManager:
             pos_hint:{"x":0.15,"y":0.84}
             on_release: 
                 root.closenote()
-            
+        
+        Button:
+            text:'Copy'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.05,"y":0.04}
+            on_release: 
+                root.copy()
+           
         Button:
             text:'Delete'
             size_hint:0.4,0.05
@@ -1067,6 +1056,13 @@ WindowManager:
                 root.viewnote()
 
         Button:
+            text:'Copy'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.05,"y":0.04}
+            on_release: 
+                root.copyparty()
+
+        Button:
             text:'Close Note'
             font_size:"10sp"
             size_hint:0.2,0.05
@@ -1189,7 +1185,14 @@ WindowManager:
             pos_hint:{"x":0.15,"y":0.84}
             on_release: 
                 root.closenotedaily()
-            
+
+        Button:
+            text:'Copy'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.15,"y":0.01}
+            on_release: 
+                root.copydaily()
+
         Button:
             text:'Delete'
             size_hint:0.4,0.05
@@ -1409,6 +1412,14 @@ WindowManager:
             on_release: 
 				root.back() 
 				root.manager.transition.direction = "right"
+
+        Image:
+            source:"secret.jpg"
+            size_hint : 0.7, 0.5
+			pos_hint : {"x":0.15, "y":0.45} 
+            allow_stretch: True
+            
+
         TextInput: 
 			id : lock
             hint_text: "mix alphabets and symbols"
@@ -1420,13 +1431,13 @@ WindowManager:
             italic: True
 			multiline :False
 			size_hint : 0.5, 0.05
-			pos_hint : {"x" : 0.25, "top" : 0.45} 
+			pos_hint : {"x" : 0.25, "top" : 0.35} 
         Button:
             #back button
             text:'Verify'
             mipmap: True
             size_hint : 0.3,0.05
-			pos_hint : {"x":0.34,"y":0.3}
+			pos_hint : {"x":0.34,"y":0.1}
             on_release: 
 				root.locker() 
 				root.manager.transition.direction = "right"
@@ -1491,7 +1502,14 @@ WindowManager:
             pos_hint:{"x":0.15,"y":0.84}
             on_release: 
                 root.closenotelocker()
-            
+
+        Button:
+            text:'Copy'
+            size_hint:0.4,0.05
+            pos_hint:{"x":0.05,"y":0.01}
+            on_release: 
+                root.copylocker()
+
         Button:
             text:'Delete'
             size_hint:0.4,0.05
