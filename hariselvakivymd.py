@@ -285,7 +285,7 @@ class shoppinglistviewWindow(Screen):
             else:
                 popFun()
 
-
+    
     def delete(self):
         if self.title_input.text=='':
             popFun()
@@ -295,9 +295,17 @@ class shoppinglistviewWindow(Screen):
                 h=self.title_input.text
                 k=store.get(h)["items"]
                 self.store.delete(h)
+                self.title_input.text=''
+                self.item_input.text=''
                 sm.current='shoppinglists'
             else:
                 popFun()
+           
+            
+                
+
+                
+
 
     def copy(self):
         clipboard.copy(self.item_input.text)
@@ -417,6 +425,8 @@ class partiesandeventsviewWindow(Screen):
                 h=self.titlein.text
                 k=store.get(h)["items"]
                 self.store.delete(h)
+                self.titlein.text=''
+                self.itemin.text=''
                 sm.current='partiesandevents'
             else:
                 popFun()
@@ -529,6 +539,8 @@ class dailyexpensesviewWindow(Screen):
                 h=self.titleinput.text
                 k=dailystore.get(h)["items"]
                 self.dailystore.delete(h)
+                self.titleinput.text=''
+                self.iteminput.text=''
                 sm.current='dailyexpenses'
             else:
                 popFun()
