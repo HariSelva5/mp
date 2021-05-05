@@ -64,15 +64,25 @@ class MainWindow(Screen):
         if self.username.text!='' and self.pwd.text!='':
             if self.username.text not in users['Name'].unique():
                 popFun()
-            else:
-                account = pd.DataFrame([[self.username.text, self.pwd.text]], columns=['Name', 'Password'])
-                account.to_csv('account.csv', index=False, header=True)
-                # switching the current screen to display validation result
-                sm.current = 'homepage'
-                # reset TextInput widget
-                self.username.text = ""
-                self.pwd.text = ""
-    
+            if self.username.text in users['Name'].unique():
+                pas=(users.loc[users['Name'] == self.username.text, 'Password'])
+                pas.to_csv('pas.csv', index=False, header=True)
+                pascsv=pd.read_csv('pas.csv')
+                if pascsv["Password"][0]==self.pwd.text:
+                    if self.username.text in users['Name'].unique():
+                        account = pd.DataFrame([[self.username.text, self.pwd.text]], columns=['Name', 'Password'])
+                        account.to_csv('account.csv', index=False, header=True)
+                        # switching the current screen to display validation result
+                        sm.current = 'homepage'
+                        # reset TextInput widget
+                        self.username.text = ""
+                        self.pwd.text = ""
+                else:
+                    popFun()
+            
+        else:
+            popFun()
+         
  
         
 class RegisterWindow(Screen):
